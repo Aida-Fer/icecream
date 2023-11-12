@@ -1,0 +1,101 @@
+<app-header></app-header>
+<div class="container">
+  <div class="content-header">
+      <div class="container-fluid" *ngIf="funcion==0">
+          <div class="row mb-2 mt-5">
+              <div class="col-sm-6">
+                  <h1 class="m-0"><b>Gestion Categorias</b></h1>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-12">
+          <div class="card">
+              <div class="card-header" *ngIf="funcion==0">
+                  <h3 class="card-title"><b>Listado de categorias</b></h3>
+                  <div style="text-align: right;">
+                      <div class="botones mt-3">
+                          <button class="btn btn-agregar btn-responsive" style="--clr:#ff1867; "
+                              (click)="mostrar(1)"><span>Añadir Categorias</span><i></i></button>
+                      </div>
+                  </div>
+                  <div class="tabla mt-3" *ngIf="funcion==0">
+                      <div class="tabla table-responsive">
+                          <div class="busqueda input-group mt-2 ms-auto" style="width: 400px;">
+                              <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="busqueda">
+                              <button class="btn btn-busqueda" type="button" (click)="cargarlista()"><i
+                                      class='bx bx-search'></i></button>
+                          </div>
+                          <table class="table table-hover mt-2">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Número</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr class="table-active" *ngFor="let categoria of categorias; index as con">
+                                    <td scope="row">{{con+1}}</td>
+                                    <td>{{ categoria.nombre }}</td>
+                                    <td *ngIf="categoria.estado=='activo'"><span class="badge btn btn-info">ACTIVO</span></td>
+                                    <td *ngIf="categoria.estado=='inactivo'"><span class="badge btn btn-primary">INACTIVO</span></td>
+                                    <td *ngIf="categoria.estado=='activo'"><button class='btn btn-primary btn-sm' data-bs-toggle="modal" data-bs-target="#modal_agregar" (click)="asignar(categoria.idcategoria)"><i class='fa fa-edit'></i></button>&nbsp;<button class='btn btn-info btn-sm' (click)="deshabilitar(categoria.idcategoria, categoria)"><i class='fa fa-trash'></i></button></td>
+                                    <td *ngIf="categoria.estado=='inactivo'"><button class='btn btn-primary btn-sm' data-bs-toggle="modal" data-bs-target="#modal_agregar" (click)="asignar(categoria.idcategoria)"><i class='fa fa-edit'></i></button>&nbsp;<button class='btn btn-info btn-sm' (click)="habilitar(categoria.idcategoria, categoria)" ><i class='fa fa-check-circle'></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+            
+                          <!-- Paginacion -->
+                          <nav aria-label="..." *ngIf="total!=0">
+                              <ul class="pagination">
+                                  <li [ngClass]="{'page-item':true, 'disabled':page==0}">
+                                      <a class="page-link" (click)="cambiarpagina(page-1)">&laquo;</a>
+                                  </li>
+                                  <li *ngFor="let item of numSequence(total);let i=index" class="page-item "
+                                      aria-current="page">
+                                      <a [ngClass]="{'page-link':true, 'active':i==page}" (click)="cambiarpagina(i)">
+                                          {{i+1}}
+                                      </a>
+                                  </li>
+                                  <li [ngClass]="{'page-item':true, 'disabled':page==total-1}">
+                                      <a class="page-link" (click)="cambiarpagina(page+1)">&raquo;</a>
+                                  </li>
+                              </ul>
+                          </nav>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-lg-12 mt-5" *ngIf="funcion==1">
+      <div class="card">
+          <div class="card-header">
+              <h3 class="card-title"><b>{{titulo}}</b></h3>
+          </div>
+          <form class="formulario" [formGroup]="registerform" (ngSubmit)="mandardatos(registerform.value)" >
+            <div class="row">
+              <div class="col-12">
+                <label for="nombre" class="form-label">Nombre *</label>
+                <div class="formulario__grupo-input">
+                  <input type="text" id="nombre" formControlName="nombre" placeholder="Ingresar nombres de la categoria" class="form-control">
+                  <i class="formulario__validacion-estado fas fa-times-circle" *ngIf="registerform.get('nombre')?.hasError('required') && registerform.get('nombre')?.touched"></i>
+                  <i class="formulario__validacion-correcto fa-solid fa-circle-check" *ngIf="registerform.get('nombre')?.valid"></i>
+                </div>
+                <span class="text-error" *ngIf="registerform.get('nombre')?.hasError('required') && registerform.get('nombre')?.touched">
+                  El campo nombre es <strong>requerido</strong>
+                </span>
+              </div>
+            </div>
+            <div class="modal-footer mt-2">
+              <button type="button" class="btn btn-secondary" id="idbotoncerrar" (click)="mostrar(0);registerform.reset();">Close</button>
+              <button [disabled]="registerform.invalid" type="submit" class="btn btn-primary ms-2">{{textoboton}}</button>
+            </div>
+          </form>
+
+      </div>
+  </div>
+</div>

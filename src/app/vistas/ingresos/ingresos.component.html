@@ -1,0 +1,198 @@
+<app-header></app-header>
+<div class="container">
+    <div class="content-header">
+        <div class="container-fluid" *ngIf="funcion==0">
+            <div class="row mb-2 mt-5">
+                <div class="col-sm-6">
+                    <h1 class="m-0"><b>GESTION INGRESOS</b></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header" *ngIf="funcion==0">
+                    <h3 class="card-title"><b>Listado de ingresos</b></h3>
+                    <div style="text-align: right;">
+                        <div class="botones mt-3">
+                            <button class="btn btn-agregar btn-responsive" style="--clr:#ff1867; "
+                                (click)="mostrar(1)"><span>Añadir Ingresos</span><i></i></button>
+                        </div>
+                    </div>
+                    <div class="tabla mt-3" *ngIf="funcion==0">
+                        <div class="tabla table-responsive">
+                            <div class="busqueda input-group mt-2 ms-auto" style="width: 400px;">
+                                <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="busqueda">
+                                <button class="btn btn-busqueda" type="button" (click)="cargarlista()"><i
+                                        class='bx bx-search'></i></button>
+                            </div>
+                            <table class="table table-hover mt-2">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Fecha</th>
+                                        <th>Total Bs</th>
+                                        <th>Proveedor</th>
+                                        <th>Ingredientes</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-active" *ngFor="let item of lista index as con">
+                                        <td>{{item.idingreso}}</td>
+                                        <td>{{ item.fecha }}</td>
+                                        <td>{{ item.total }}</td>
+                                        <td>{{item.nombre}}</td>
+                                        <td>{{item.ingredientes}}</td>
+                                        <td><button class='btn btn-mod btn-sm' (click)="asignar(item.idingreso)"><i class='fa fa-edit'></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- Paginacion -->
+                            <nav aria-label="..." *ngIf="total!=0">
+                                <ul class="pagination">
+                                    <li [ngClass]="{'page-item':true, 'disabled':page==0}">
+                                        <a class="page-link" (click)="cambiarpagina(page-1)">&laquo;</a>
+                                    </li>
+                                    <li *ngFor="let item of numSequence(total);let i=index" class="page-item "
+                                        aria-current="page">
+                                        <a [ngClass]="{'page-link':true, 'active':i==page}" (click)="cambiarpagina(i)">
+                                            {{i+1}}
+                                        </a>
+                                    </li>
+                                    <li [ngClass]="{'page-item':true, 'disabled':page==total-1}">
+                                        <a class="page-link" (click)="cambiarpagina(page+1)">&raquo;</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 mt-5" *ngIf="funcion==1">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><b>{{titulo}}</b></h3>
+            </div>
+            <form class="formulario" [formGroup]="formulario" (ngSubmit)="mandardatos(formulario.value)">
+                <div class="row">
+                    <div class="seleccionar col-5">
+                        <label for="idproveedor" class="form-label">Proveedor *</label>
+                        <select id="idproveedor" class="form-select" formControlName="idproveedor">
+                            <option value="{{item.idproveedor}}" *ngFor="let item of lsprovee">{{item.nombre}}</option>
+                        </select>
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('idproveedor')?.hasError('required') && formulario.get('idproveedor')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('idproveedor')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('idproveedor')?.hasError('required') && formulario.get('idproveedor')?.touched">
+                            El campo nombre del proveedor es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-3">
+                        <label for="fecha" class="form-label">Fecha *</label>
+                        <input type="date" id="fecha" formControlName="fecha" class="form-control">
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('fecha')?.hasError('required') && formulario.get('fecha')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('fecha')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('fecha')?.hasError('required') && formulario.get('fecha')?.touched">
+                            El campo fecha es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <label for="total" class="form-label">Total *</label>
+                        <input type="number" id="total" formControlName="total" class="form-control" readonly [(ngModel)]="totalvalor">
+                        <i class="formulario__validacion-estado-cuatro fas fa-times-circle" *ngIf="formulario.get('total')?.hasError('required') && formulario.get('total')?.touched"></i>
+                        <i class="formulario__validacion-correcto-cuatro fa-solid fa-circle-check" *ngIf="formulario.get('total')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('total')?.hasError('required') && formulario.get('total')?.touched">
+                            El campo total es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <hr style="margin-top: 10px;">
+                    <div class="col-5">
+                        <label for="ingredientes" class="form-label">Ingredientes *</label>
+                        <select id="ingredientes" class="form-select" [(ngModel)]="opcionSeleccionado" formControlName="ingredientes">
+                            <option value="{{item.idingredientes}}" *ngFor="let item of lsing">{{item.nombre}}</option>
+                        </select>
+                        <i class="formulario__validacion-estado-cinco fas fa-times-circle" *ngIf="formulario.get('ingredientes')?.hasError('required') && formulario.get('ingredientes')?.touched"></i>
+                        <i class="formulario__validacion-correcto-cinco fa-solid fa-circle-check" *ngIf="formulario.get('ingredientes')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('ingredientes')?.hasError('required') && formulario.get('ingredientes')?.touched">
+                            El campo Ingredientes es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-3">
+                        <label for="fechavec" class="form-label">Vencimiento *</label>
+                        <input type="date" id="fechavec" formControlName="fechavec" class="form-control">
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('fechavec')?.hasError('required') && formulario.get('fechavec')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('fechavec')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('fechavec')?.hasError('required') && formulario.get('fechavec')?.touched">
+                            El campo Vencimiento es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-2">
+                        <label for="unidades" class="form-label">Unidades *</label>
+                        <input type="number" id="unidades" formControlName="unidades"  class="form-control" value="0">
+                        <i class="formulario__validacion-estado-dos fas fa-times-circle" *ngIf="formulario.get('unidades')?.hasError('required') && formulario.get('unidades')?.touched"></i>
+                        <i class="formulario__validacion-correcto-dos fa-solid fa-circle-check" *ngIf="formulario.get('unidades')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('unidades')?.hasError('required') && formulario.get('unidades')?.touched">
+                            El campo Unidades es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-2">
+                        <label for="costo" class="form-label">Costo Unitario *</label>
+                        <input type="number" id="costo" formControlName="costo"  class="form-control" value="0">
+                        <i class="formulario__validacion-estado-dos fas fa-times-circle" *ngIf="formulario.get('costo')?.hasError('required') && formulario.get('costo')?.touched"></i>
+                        <i class="formulario__validacion-correcto-dos fa-solid fa-circle-check" *ngIf="formulario.get('costo')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('costo')?.hasError('required') && formulario.get('costo')?.touched">
+                            El campo Costo Unitario es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-12">
+                        <label for="">&nbsp;</label><br>
+                        <button type="button" class="btn btn-secondary" style="width:100%" (click)="cargar();"><i
+                                class="fa fa-plus"></i> Agregar</button>
+                    </div>
+                    <div class="col-12 table-responsive"><br>
+                        <table class="table table-hover" style="width:100%">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Ingrediente</th>
+                                    <th scope="col">Vencimiento</th>
+                                    <th scope="col">Unidades</th>
+                                    <th scope="col">Costo Unitario</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-secondary" *ngFor="let item of lsingreso; let i=index">
+                                    <td scope="row">{{i+1}}</td>
+                                    <td>{{item.nombre}}</td>
+                                    <td>{{item.fechavec}}</td>
+                                    <td>{{item.cantidad}}</td>
+                                    <td>{{item.CostoU}}</td>
+                                    <td><button type="button" class="btn btn-primary" (click)="eliminar(i)"><i
+                                                class='bx bx-trash'></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="mostrar(0)"
+                        id="idbotoncerrar">Close</button>
+                    <button  type="submit"
+                        class="btn btn-primary ms-2">{{textoboton}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

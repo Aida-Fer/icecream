@@ -1,0 +1,218 @@
+
+/* Opcion2 */
+.btn-agregar{
+  position: relative;
+  background: #fff;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  padding: 10px 20px;
+  transition: 0.5s;
+  gap: 50px;
+  bottom: 15px;
+}
+.btn-agregar:hover{
+  background: var(--clr);
+  color:var(--clr);
+  letter-spacing: 0.25em;
+  box-shadow: 0 0 35px var(--clr);
+}
+.btn-agregar:before{
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: #27282c;
+}
+.btn-agregar span{
+  position: relative;
+  z-index: 1;
+}
+.btn-agregar i{
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.btn-agregar i::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 80%;
+  width: 10%;
+  height: 4px;
+  background: #27282c;
+  transform: translateX(-50%) skewX(325deg) ;
+  transition: 0.5s;
+}
+.btn-agregar:hover i::before{
+  width: 20px;
+  left: 20%;
+}
+.btn-agregar i::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 10%;
+  height: 4px;
+  background: #27282c;
+  transform: translateX(-50%) skewX(325deg) ;
+  transition: 0.5s;
+}
+.btn-agregar:hover i::after{
+  width: 20px;
+  left: 80%;
+}
+/* Busqueda */
+.busqueda{
+  width: 350px;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1rem;
+}
+.btn-busqueda{
+  background-color: crimson;
+  padding: 0px 15px;
+
+}
+td a{
+  bottom: 0px;
+}
+.btn-mod{
+  background: #F5C9D9;
+}
+.btn-hab{
+  background: #97E1D4;
+}
+.btn-desh{
+  background: #EE80D2;
+}
+.btn-act{
+  background: #4BB8F9;
+}
+.btn-inac{
+  background: #CEBBFA;
+}
+.tabla{
+  padding: 15px 20px;
+}
+.card {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.table-secondary{
+  /* font-weight: 600; */
+  color: #000;
+  background: transparent;
+}
+ /* Validaciones */
+ input:focus {
+	border: 3px solid #0075FF;
+	outline: none;
+	box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
+}
+
+input.ng-invalid.ng-touched{
+  border:solid 2px red;
+  
+}
+
+input.ng-valid{
+  border:solid 2px rgb(0, 247, 255);
+}
+.formulario__validacion-estado {
+	position: relative;
+	left: 1050px;
+	bottom: 35px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 1;
+  color: red;
+}
+.formulario__validacion-estado-tres {
+	position: relative;
+	left: 220px;
+	bottom: 35px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 1;
+  color: red;
+}
+.formulario__validacion-estado-nueve {
+	position: relative;
+	left: 770px;
+	bottom: 35px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 1;
+  color: red;
+}
+.formulario__validacion-estado-seis {
+	position: relative;
+	left: 500px;
+	bottom: 35px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 1;
+  color: red;
+}
+.formulario__validacion-correcto {
+	position: relative;
+	left: 1050px;
+	bottom: 35px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 1;
+  color: rgb(0, 247, 255);
+}
+.formulario__validacion-correcto-tres {
+	position: relative;
+	left: 220px;
+	bottom: 35px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 1;
+  color: rgb(0, 247, 255);
+}
+.formulario__validacion-correcto-nueve {
+	position: relative;
+	left: 770px;
+	bottom: 35px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 1;
+  color: rgb(0, 247, 255);
+}
+.formulario__validacion-correcto-seis {
+	position: relative;
+	left: 500px;
+	bottom: 35px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 1;
+  color: rgb(0, 247, 255);
+}
+.text-error{
+  color: red;
+}
+/* .row{
+  margin-top: 80px;
+} */
+@media (max-width: 768px) {
+  .btn-responsive {
+    padding:2px 4px;
+    font-size:85%;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .btn-responsive {
+    padding:4px 9px;
+    font-size:90%;
+    line-height: 1.2;
+  }
+}

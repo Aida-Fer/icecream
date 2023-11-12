@@ -1,0 +1,128 @@
+<app-header></app-header>
+<div class="container">
+    <div class="content-header">
+        <div class="container-fluid" *ngIf="funcion==0">
+            <div class="row mb-2 mt-5">
+                <div class="col-sm-6">
+                    <h1 class="m-0"><b>GESTION PRODUCCION</b></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header" *ngIf="funcion==0">
+                    <h3 class="card-title"><b>Listado de produccion</b></h3>
+                    <div style="text-align: right;">
+                        <div class="botones mt-3">
+                            <button class="btn btn-agregar btn-responsive" style="--clr:#ff1867; "
+                                (click)="mostrar(1)"><span>Añadir Produccion</span><i></i></button>
+                        </div>
+                    </div>
+                    <div class="tabla mt-3" *ngIf="funcion==0">
+                        <div class="tabla table-responsive">
+                            <div class="busqueda input-group mt-2 ms-auto" style="width: 400px;">
+                                <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="busqueda">
+                                <button class="btn btn-busqueda" type="button" (click)="cargarlista()"><i
+                                        class='bx bx-search'></i></button>
+                            </div>
+                            <table class="table table-hover mt-2">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Sabor</th>
+                                        <th>Fecha</th>
+                                        <th>Vencimiento</th>
+                                        <th>Costo</th>
+                                        <th>Cantidad Existente</th>
+                                        <th>Unidades Existente</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-active" *ngFor="let item of lista index as con">
+                                        <td>{{item.idproduccion}}</td>
+                                        <td>{{ item.sabor }}</td>
+                                        <td>{{ item.fecha }}</td>
+                                        <td>{{item.fechavenc}}</td>
+                                        <td>{{item.costo}}</td>
+                                        <td>{{item.extCantidad}}</td>
+                                        <td>{{item.extCantidad}}</td>
+                                        <td><button class='btn btn-mod btn-sm' (click)="asignar(item.idproduccion)"><i class='fa fa-edit'></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <nav aria-label="..." *ngIf="total!=0">
+                                <ul class="pagination">
+                                    <li [ngClass]="{'page-item':true, 'disabled':page==0}">
+                                        <a class="page-link" (click)="cambiarpagina(page-1)">&laquo;</a>
+                                    </li>
+                                    <li *ngFor="let item of numSequence(total);let i=index" class="page-item "
+                                        aria-current="page">
+                                        <a [ngClass]="{'page-link':true, 'active':i==page}" (click)="cambiarpagina(i)">
+                                            {{i+1}}
+                                        </a>
+                                    </li>
+                                    <li [ngClass]="{'page-item':true, 'disabled':page==total-1}">
+                                        <a class="page-link" (click)="cambiarpagina(page+1)">&raquo;</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 mt-5" *ngIf="funcion==1">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><b>{{titulo}}</b></h3>
+            </div>
+            <form class="formulario" [formGroup]="formulario" (ngSubmit)="mandardatos(formulario.value)">
+                <div class="row">
+                    <div class="seleccionar col-5">
+                        <label for="idreceta" class="form-label">Receta *</label>
+                        <select id="idreceta" class="form-select" formControlName="idreceta">
+                            <option value="{{item.idreceta}}" *ngFor="let item of lsabores">{{item.sabor}}</option>
+                        </select>
+                        <i class="formulario__validacion-estado-cinco fas fa-times-circle" *ngIf="formulario.get('idreceta')?.hasError('required') && formulario.get('idreceta')?.touched"></i>
+                        <i class="formulario__validacion-correcto-cinco fa-solid fa-circle-check" *ngIf="formulario.get('idreceta')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('idreceta')?.hasError('required') && formulario.get('idreceta')?.touched">
+                            El campo nombre del sabor es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-3">
+                        <label for="fechavenc" class="form-label">Fecha de vencimiento *</label>
+                        <input type="date" id="fechavenc" formControlName="fechavenc" class="form-control">
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('fechavenc')?.hasError('required') && formulario.get('fechavenc')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('fechavenc')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('fechavenc')?.hasError('required') && formulario.get('fechavenc')?.touched">
+                            El campo fecha es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-4">
+                        <label for="cantidad" class="form-label">Cantidad *</label>
+                        <input type="number" id="cantidad" formControlName="cantidad" class="form-control">
+                        <i class="formulario__validacion-estado-cuatro fas fa-times-circle" *ngIf="formulario.get('cantidad')?.hasError('required') && formulario.get('cantidad')?.touched"></i>
+                        <i class="formulario__validacion-correcto-cuatro fa-solid fa-circle-check" *ngIf="formulario.get('cantidad')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('cantidad')?.hasError('required') && formulario.get('cantidad')?.touched">
+                            El campo total es <strong>requerido</strong>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+                    <button type="button" class="btn btn-secondary" (click)="mostrar(0)"
+                        id="idbotoncerrar">Close</button>
+                    <button [disabled]="formulario.invalid" type="submit"
+                        class="btn btn-primary ms-2">{{textoboton}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

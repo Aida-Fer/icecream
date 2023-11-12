@@ -1,0 +1,4 @@
+/* Validaciones */
+input.ng-invalid.ng-untouched{
+    border:solid 2px red;
+}

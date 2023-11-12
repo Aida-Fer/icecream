@@ -1,0 +1,31 @@
+<section>
+  <div class="box">
+      <div class="form-value">
+          <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)" >
+              <h2>Login</h2>
+              <div class="inputbox">
+                  <input type="text" id="usuario" formControlName="usuario" required>
+                  <i class='bx bxs-user'></i>
+                  <span>Usuario</span>
+              </div>
+              <div class="inputbox mt-2">
+                  <input type="password" id="contraseña" formControlName="contraseña" required>
+                  <i class='bx bxs-lock-alt'></i>
+                  <span>Contraseña</span>
+              </div>
+              <div class="forget mt-2">
+                  <label for=""><input type="checkbox">Recuerdame
+                  <a href="#">Forget Password</a></label>
+              </div>
+              <div class="inputbox mt-2">
+                <input type="submit" value="Login">
+              </div>
+          </form>
+          <br> <br>
+          <div class="alert alert-light" *ngIf="errorStatus">
+            <p>{{ errorMsj }}</p>
+          </div>
+
+      </div>
+  </div>
+</section>

@@ -1,0 +1,182 @@
+<app-header></app-header>
+<div class="container">
+    <div class="content-header">
+        <div class="container-fluid" *ngIf="funcion==0">
+            <div class="row mb-2 mt-5">
+                <div class="col-sm-6">
+                    <h1 class="m-0"><b>GESTION SABORES</b></h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header" *ngIf="funcion==0">
+                    <h3 class="card-title"><b>Listado de sabores</b></h3>
+                    <div style="text-align: right;">
+                        <div class="botones mt-3">
+                            <button class="btn btn-agregar btn-responsive" style="--clr:#ff1867; "
+                                (click)="mostrar(1)"><span>Añadir Sabor</span><i></i></button>
+                        </div>
+                    </div>
+                    <div class="tabla mt-3" *ngIf="funcion==0">
+                        <div class="tabla table-responsive">
+                            <div class="busqueda input-group mt-2 ms-auto" style="width: 400px;">
+                                <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="busqueda">
+                                <button class="btn btn-busqueda" type="button" (click)="cargarlista()"><i
+                                        class='bx bx-search'></i></button>
+                            </div>
+                            <table class="table table-hover mt-2">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Número</th>
+                                        <th scope="col">Nombre del Sabor</th>
+                                        <th scope="col">Ingredientes</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-active" *ngFor="let sabor of sabores index as con">
+                                        <td scope="row">{{con+1}}</td>
+                                        <td>{{ sabor.sabor }}</td>
+                                        <td>{{ sabor.nombre }}</td>
+                                        <td *ngIf="sabor.estado=='activo'"><span class="badge btn-act">ACTIVO</span>
+                                        </td>
+                                        <td *ngIf="sabor.estado=='inactivo'"><span
+                                                class="badge btn-inac">INACTIVO</span></td>
+                                        <td *ngIf="sabor.estado=='activo'"><button class='btn btn-mod btn-sm'
+                                                (click)="asignar(sabor.idreceta)"><i
+                                                    class='fa fa-edit'></i></button>&nbsp;<button
+                                                class='btn btn-hab btn-sm'
+                                                (click)="deshabilitar(sabor.idreceta, sabor)"><i
+                                                    class='fa fa-trash'></i></button></td>
+                                        <td *ngIf="sabor.estado=='inactivo'"><button class='btn btn-mod btn-sm'
+                                                data-bs-toggle="modal" data-bs-target="#modal_agregar"
+                                                (click)="asignar(sabor.idreceta)"><i
+                                                    class='fa fa-edit'></i></button>&nbsp;<button
+                                                class='btn btn-hab btn-sm' (click)="habilitar(sabor.idreceta, sabor)"><i
+                                                    class='fa fa-check-circle'></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- Paginacion -->
+                            <nav aria-label="..." *ngIf="total!=0">
+                                <ul class="pagination">
+                                    <li [ngClass]="{'page-item':true, 'disabled':page==0}">
+                                        <a class="page-link" (click)="cambiarpagina(page-1)">&laquo;</a>
+                                    </li>
+                                    <li *ngFor="let item of numSequence(total);let i=index" class="page-item "
+                                        aria-current="page">
+                                        <a [ngClass]="{'page-link':true, 'active':i==page}" (click)="cambiarpagina(i)">
+                                            {{i+1}}
+                                        </a>
+                                    </li>
+                                    <li [ngClass]="{'page-item':true, 'disabled':page==total-1}">
+                                        <a class="page-link" (click)="cambiarpagina(page+1)">&raquo;</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 mt-5" *ngIf="funcion==1">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><b>{{titulo}}</b></h3>
+            </div>
+            <br>
+            <form class="formulario" [formGroup]="formulario" (ngSubmit)="mandardatos(formulario.value)">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="nombre" class="form-label">Nombre del Sabor *</label>
+                        <input type="text" id="nombre" formControlName="sabor"
+                            placeholder="Ingresar el nombre del sabor" class="form-control">
+                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('sabor')?.hasError('required') && formulario.get('sabor')?.touched"></i>
+                        <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('sabor')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('sabor')?.hasError('required') && formulario.get('sabor')?.touched">
+                            El campo nombre del sabor es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-3">
+                        <label for="cantidad" class="form-label">Cantidad *</label>
+                        <input type="number" id="cantidad" formControlName="cantidad"
+                            placeholder="Ingresar la cantidad del sabor" class="form-control">
+                            <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('cantidad')?.hasError('required') && formulario.get('cantidad')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('cantidad')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('cantidad')?.hasError('required') && formulario.get('cantidad')?.touched">
+                            El campo cantidad es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-3">
+                        <label for="peso" class="form-label">Peso *</label>
+                        <input type="number" id="peso" formControlName="peso"
+                            placeholder="Ingresar la peso del sabor" class="form-control">
+                            <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('cantidad')?.hasError('required') && formulario.get('peso')?.touched"></i>
+                            <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('cantidad')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('peso')?.hasError('required') && formulario.get('peso')?.touched">
+                            El campo peso es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="seleccionar col-5">
+                        <label for="ingredientes" class="form-label">Ingredientes *</label>
+                        <select id="ingredientes" class="form-select" formControlName="idsabor">
+                            <option value="{{item.idingredientes}}" *ngFor="let item of lsing">{{item.nombre}}</option>
+                        </select>
+                        <i class="formulario__validacion-estado-cinco fas fa-times-circle" *ngIf="formulario.get('idsabor')?.hasError('required') && formulario.get('idsabor')?.touched"></i>
+                        <i class="formulario__validacion-correcto-cinco fa-solid fa-circle-check" *ngIf="formulario.get('idsabor')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('idsabor')?.hasError('required') && formulario.get('idsabor')?.touched">
+                            El campo ingrediente es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-5">
+                        <label for="medida" class="form-label">Medida * </label>
+                        <input type="number" id="medida" formControlName="medida" placeholder="Ingresar la medida del sabor" class="form-control">
+                        <i class="formulario__validacion-estado-cinco fas fa-times-circle" *ngIf="formulario.get('medida')?.hasError('required') && formulario.get('medida')?.touched"></i>
+                        <i class="formulario__validacion-correcto-cinco fa-solid fa-circle-check" *ngIf="formulario.get('medida')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('medida')?.hasError('required') && formulario.get('medida')?.touched">
+                            El campo medida es <strong>requerido</strong>
+                        </span>
+                    </div>
+                    <div class="col-2">
+                        <label for="">&nbsp;</label><br>
+                        <button type="button" class="btn btn-mod btn-sm" style="width:100%" (click)="cargar();"><i
+                                class="fa fa-plus"></i>Agregar</button>
+                    </div>
+                    <div class="col-12 table-responsive"><br>
+                        <table class="table table-hover" style="width:100%">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Ingrediente</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-secondary" *ngFor="let item of lsingredientes; let i=index">
+                                    <td scope="row">{{i+1}}</td>
+                                    <td>{{item.nombre}}</td>
+                                    <td>{{item.cantidad}}</td>
+                                    <td><button type="button" class="btn btn-primary" (click)="eliminar(i)"><i class='bx bx-trash'></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="mostrar(0)" id="idbotoncerrar">Close</button>
+                    <button [disabled]="formulario.invalid" type="submit" class="btn btn-primary ms-2">{{textoboton}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

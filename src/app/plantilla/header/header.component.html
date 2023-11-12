@@ -1,0 +1,96 @@
+<nav class="navbar navbar-expand-lg bg-primary fixed-top" data-bs-theme="dark">
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary menu-color fixed-top"> -->
+    <div class="container">
+        <a class="navbar-brand" href="#">Icecreamplus</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Producción
+                    </a>
+                    <ul class="dropdown-menu bg-primary dropdown-menu-end">
+                        <li><a class="dropdown-item" routerLink="/recetas" routerLinkActive="activo">Gestión Sabores</a>
+                        </li>
+                        <!-- <li><a class="dropdown-item" routerLink="/sab" routerLinkActive="activo">Gestión Sabores</a></li> -->
+                        <!-- <li><a class="dropdown-item" href="ingresos">Ingresos</a></li> -->
+                        <li><a class="dropdown-item" href="produccion">Gestión Producción</a></li>
+                        <li><a class="dropdown-item" href="#">Control de lotes de producción</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Inventario
+                    </a>
+                    <ul class="dropdown-menu bg-primary dropdown-menu-end">
+                        <!-- <li><a class="dropdown-item" routerLink="/resumen" routerLinkActive="activo">Resumen</a></li> -->
+                        <li><a class="dropdown-item" routerLink="/ing" routerLinkActive="activo">Gestión de
+                                ingredientes</a></li>
+                        <li><a class="dropdown-item" routerLink="/resumen" routerLinkActive="activo">Control de existencias de ingredientes</a></li>
+                        <li><a class="dropdown-item" routerLink="/prov" routerLinkActive="activo">Gestión de
+                                proveedores</a></li>
+                        <li><a class="dropdown-item" href="ingresos">Registro de entradas y salidas de inventario</a></li>
+                        <!-- <li><a class="dropdown-item" href="#">Alertas de inventario bajo</a></li> -->
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Ventas
+                    </a>
+                    <ul class="dropdown-menu bg-primary dropdown-menu-end">
+                        <li><a class="dropdown-item" href="ventas">Registro de ventas diarias</a></li>
+                        <!-- <li><a class="dropdown-item" href="#">Gestión de pedidos</a></li> -->
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Clientes
+                    </a>
+                    <ul class="dropdown-menu bg-primary dropdown-menu-end">
+                        <li><a class="dropdown-item" routerLink="/clie" routerLinkActive="activo">Gestión de información de clientes</a></li>
+                        <li><a class="dropdown-item" href="#">Historial de compras de clientes</a></li>
+                        <li><a class="dropdown-item" href="#">Programa de fidelidad y promociones especiales</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Reportes
+                    </a>
+                    <ul class="dropdown-menu bg-primary dropdown-menu-end">
+                        <li><b><a class="dropdown-item" href="#">Informes de producción</a></b></li>
+                        <li><a class="dropdown-item" href="#">Informes de inventario</a></li>
+                        <li><a class="dropdown-item" href="#">Informes de ventas</a></li>
+                        <li><a class="dropdown-item" href="#">Análisis de tendencias y estadísticas</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item  dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Configuración
+                    </a>
+                    <ul class="dropdown-menu bg-primary dropdown-menu-end">
+                        <li><a class="dropdown-item" routerLink="/usu" routerLinkActive="activo">Gestión de usuarios</a>
+                        </li>
+                        <li><a class="dropdown-item" routerLink="/prod" routerLinkActive="activo">Gestión de
+                                productos</a></li>
+                        <li><a class="dropdown-item" routerLink="/cat" routerLinkActive="activo">Gestión Categorias</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item  dropdown">
+                    <a class="nav-link" routerLink="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="../../../assets/imagenes/power-off.png" >
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

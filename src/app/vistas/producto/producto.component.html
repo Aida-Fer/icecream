@@ -1,0 +1,144 @@
+<app-header></app-header>
+<div class="container">
+  <div class="content-header">
+      <div class="container-fluid" *ngIf="funcion==0">
+          <div class="row mb-2 mt-5">
+              <div class="col-sm-6">
+                  <h1 class="m-0"><b>GESTION PRODUCTOS</b></h1>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-12">
+          <div class="card">
+              <div class="card-header" *ngIf="funcion==0">
+                  <h3 class="card-title"><b>Listado de Productos</b></h3>
+                  <div style="text-align: right;">
+                      <div class="botones mt-3">
+                          <button class="btn btn-agregar btn-responsive" style="--clr:#ff1867; "
+                              (click)="mostrar(1)"><span>Añadir Producto</span><i></i></button>
+                      </div>
+                  </div>
+                  <div class="tabla mt-3" *ngIf="funcion==0">
+                      <div class="tabla table-responsive">
+                          <div class="busqueda input-group mt-2 ms-auto" style="width: 400px;">
+                              <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="busqueda">
+                              <button class="btn btn-busqueda" type="button" (click)="cargarlista()"><i
+                                      class='bx bx-search'></i></button>
+                          </div>
+                          <table class="table table-hover mt-2">
+                            <thead class="thead-dark">
+                              <tr>
+                                <th scope="col">Número</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Accion</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="table-active" *ngFor="let producto of productos; index as con">
+                                <th scope="row">{{con+1}}</th>
+                                <th scope="row">{{ producto.nombre }}</th>
+                                <td>{{ producto.Categoria }}</td>
+                                <td>{{ producto.precio}}</td>
+                                <td><button class='btn btn-mod btn-sm' data-bs-toggle="modal" data-bs-target="#modal_agregar"
+                                    (click)="asignar(producto.idproducto)"><i class='fa fa-edit'></i></button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        <!-- Paginacion -->
+                          <nav aria-label="..." *ngIf="total!=0">
+                              <ul class="pagination">
+                                  <li [ngClass]="{'page-item':true, 'disabled':page==0}">
+                                      <a class="page-link" (click)="cambiarpagina(page-1)">&laquo;</a>
+                                  </li>
+                                  <li *ngFor="let item of numSequence(total);let i=index" class="page-item "
+                                      aria-current="page">
+                                      <a [ngClass]="{'page-link':true, 'active':i==page}" (click)="cambiarpagina(i)">
+                                          {{i+1}}
+                                      </a>
+                                  </li>
+                                  <li [ngClass]="{'page-item':true, 'disabled':page==total-1}">
+                                      <a class="page-link" (click)="cambiarpagina(page+1)">&raquo;</a>
+                                  </li>
+                              </ul>
+                          </nav>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-lg-12 mt-5" *ngIf="funcion==1">
+      <div class="card">
+          <div class="card-header">
+              <h3 class="card-title"><b>{{titulo}}</b></h3>
+          </div>
+          <form class="formulario" [formGroup]="registerform" (ngSubmit)="mandardatos(registerform.value)">
+            <div class="row">
+              <!--Nombre-->
+              <div class="formulario-group col-9">
+                <label for="nombre" class="form-label">Nombres *</label>
+                <input type="text" id="nombre" formControlName="nombre" placeholder="Ingresar nombres del producto"
+                  class="form-control">
+                  <i class="formulario__validacion-estado-nueve fas fa-times-circle" *ngIf="registerform.get('nombre')?.hasError('required') && registerform.get('nombre')?.touched"></i>
+                  <i class="formulario__validacion-correcto-nueve fa-solid fa-circle-check" *ngIf="registerform.get('nombre')?.valid"></i>
+                <span class="text-error"
+                  *ngIf="registerform.get('nombre')?.hasError('required') && registerform.get('nombre')?.touched">
+                  El campo nombre es <strong>requerido</strong>
+                </span>
+              </div>
+              <div class="col-3">
+                <label for="nroporcion" class="form-label">Numero de porciones *</label>
+                <input type="number" class="form-control" id="nroporcion" formControlName="nroporcion">
+                <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="registerform.get('nroporcion')?.hasError('required') && registerform.get('nroporcion')?.touched"></i>
+                <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="registerform.get('nroporcion')?.valid"></i>
+                <span class="text-error"
+                  *ngIf="registerform.get('nroporcion')?.hasError('required') && registerform.get('nroporcion')?.touched">
+                  El campo numero de porciones es <strong>requerido</strong>
+                </span>
+              </div>
+              <div class="col-3">
+                <label for="precio" class="form-label">Precio *</label>
+                <input type="number" class="form-control" id="precio" formControlName="precio">
+                <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('precio')?.hasError('required') && registerform.get('costobase')?.touched"></i>
+                <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('precio')?.valid"></i>
+                <span class="text-error"
+                  *ngIf="registerform.get('precio')?.hasError('required') && registerform.get('precio')?.touched">
+                  El campo costo base es <strong>requerido</strong>
+                </span>
+              </div>
+              <div class="col-3">
+                <label for="costobase" class="form-label">Costo Base *</label>
+                <input type="number" class="form-control" id="costobase" formControlName="costobase">
+                <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('costobase')?.hasError('required') && registerform.get('costobase')?.touched"></i>
+                <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('costobase')?.valid"></i>
+                <span class="text-error"
+                  *ngIf="registerform.get('costobase')?.hasError('required') && registerform.get('costobase')?.touched">
+                  El campo costo base es <strong>requerido</strong>
+                </span>
+              </div>
+              <div class="seleccionar col-6">
+                <label for="idcategoria" class="form-label">Categoria *</label>
+                <select id="idcategoria" class="form-select" formControlName="idcategoria">
+                  <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('idcategoria')?.hasError('required') && registerform.get('idcategoria')?.touched"></i>
+                  <i class="formulario__validacion-correcto-sies fa-solid fa-circle-check" *ngIf="registerform.get('idcategoria')?.valid"></i>
+                  <span class="text-error"
+                            *ngIf="registerform.get('idcategoria')?.hasError('required') && registerform.get('idcategoria')?.touched">
+                            El campo nombre del proveedor es <strong>requerido</strong>
+                        </span>
+                  <option value="{{ item.idcategoria }}" *ngFor="let item of lscat">{{item.nombre}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer mt-2">
+              <button type="button" class="btn btn-act" id="idbotoncerrar" (click)="registerform.reset(); opcion=0;">Close</button>
+              <button [disabled]="registerform.invalid" type="submit" class="btn btn-primary ms-2">{{textoboton}}</button>
+            </div>
+          </form>
+
+      </div>
+  </div>
+</div>

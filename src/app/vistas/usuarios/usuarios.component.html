@@ -1,0 +1,236 @@
+<app-header></app-header>
+<div class="container">
+  <div class="content-header">
+      <div class="container-fluid" *ngIf="funcion==0">
+          <div class="row mb-2 mt-5">
+              <div class="col-sm-6">
+                  <h1 class="m-0"><b>GESTION Usuario</b></h1>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-12">
+          <div class="card">
+              <div class="card-header" *ngIf="funcion==0">
+                  <h3 class="card-title"><b>Listado de usuarios</b></h3>
+                  <div style="text-align: right;">
+                      <div class="botones mt-3">
+                          <button class="btn btn-agregar btn-responsive" style="--clr:#ff1867; "
+                              (click)="mostrar(1)"><span>Añadir Usuario</span><i></i></button>
+                      </div>
+                  </div>
+                  <div class="tabla mt-3" *ngIf="funcion==0">
+                      <div class="tabla table-responsive">
+                          <div class="busqueda input-group mt-2 ms-auto" style="width: 400px;">
+                              <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="busqueda">
+                              <button class="btn btn-busqueda" type="button" (click)="cargarlista()"><i
+                                      class='bx bx-search'></i></button>
+                          </div>
+                          <table class="table table-hover mt-2">
+                            <thead class="thead-dark">
+                              <tr>
+                                <th scope="col">Número</th>
+                                <th scope="col">Usuario</th>
+                                <th scope="col">Hora entrada</th>
+                                <th scope="col">Hora salida</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Rol</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Accion</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="table-active" *ngFor="let usuario of lsusuarios; index as con">
+                                <th scope="row">{{con+1}}</th>
+                                <td>{{ usuario.usuario }}</td>
+                                <td>{{ usuario.horaentrada }}</td>
+                                <td>{{ usuario.horasalida}}</td>
+                                <td>{{ usuario.nombre}}</td>
+                                <td>{{ usuario.rol }}</td>
+                                <td *ngIf="usuario.estado=='activo'"><span class="badge btn-act">ACTIVO</span></td>
+                                <td *ngIf="usuario.estado=='inactivo'"><span class="badge btn-inac">INACTIVO</span></td>
+                                <td *ngIf="usuario.estado=='activo'"><button class='btn btn-mod btn-sm' data-bs-toggle="modal"
+                                    data-bs-target="#modal_agregar_usuario" (click)="asignar(usuario.idusuario)"><i
+                                      class='fa fa-edit'></i></button>&nbsp;<button class='btn btn-hab btn-sm'
+                                    (click)="deshabilitar(usuario.idusuario,usuario)"><i class='fa fa-trash'></i></button></td>
+                                <td *ngIf="usuario.estado=='inactivo'"><button class='btn btn-mod btn-sm' data-bs-toggle="modal"
+                                    data-bs-target="#modal_agregar_usuario" (click)="asignar(usuario.idusuario)"><i
+                                      class='fa fa-edit'></i></button>&nbsp;<button class='btn btn-hab btn-sm'
+                                    (click)="habilitar(usuario.idusuario,usuario)"><i class='fa fa-check-circle'></i></button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                
+                          <!-- Paginacion -->
+                          <nav aria-label="..." *ngIf="total!=0">
+                              <ul class="pagination">
+                                  <li [ngClass]="{'page-item':true, 'disabled':page==0}">
+                                      <a class="page-link" (click)="cambiarpagina(page-1)">&laquo;</a>
+                                  </li>
+                                  <li *ngFor="let item of numSequence(total);let i=index" class="page-item "
+                                      aria-current="page">
+                                      <a [ngClass]="{'page-link':true, 'active':i==page}" (click)="cambiarpagina(i)">
+                                          {{i+1}}
+                                      </a>
+                                  </li>
+                                  <li [ngClass]="{'page-item':true, 'disabled':page==total-1}">
+                                      <a class="page-link" (click)="cambiarpagina(page+1)">&raquo;</a>
+                                  </li>
+                              </ul>
+                          </nav>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-lg-12 mt-5" *ngIf="funcion==1">
+      <div class="card">
+          <div class="card-header">
+              <h3 class="card-title"><b>{{titulo}}</b></h3>
+          </div>
+          <form class="formulario" [formGroup]="formulario" (ngSubmit)="mandardatos(formulario.value)">
+              <div class="row">
+                  <div class="col-3">
+                      <label for="ci" class="form-label">Ci *</label>
+                        <input type="text" id="ci" formControlName="ci" placeholder="Ingresar CI" class="form-control"  maxlength="8">
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('ci')?.hasError('required') && formulario.get('ci')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('ci')?.valid"></i>
+                        <span class="text-error" *ngIf="formulario.get('ci')?.hasError('required') && formulario.get('ci')?.touched">
+                          El campo ci es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-9">
+                        <label for="nombre" class="form-label">Nombres *</label>
+                        <input type="text" id="nombre" formControlName="nombre" placeholder="Ingresar nombres del personal" class="form-control">
+                        <i class="formulario__validacion-estado-nueve fas fa-times-circle" *ngIf="formulario.get('nombre')?.hasError('required') && formulario.get('nombre')?.touched"></i>
+                      <i class="formulario__validacion-correcto-nueve fa-solid fa-circle-check" *ngIf="formulario.get('nombre')?.valid"></i>
+                        <span class="text-error" *ngIf="formulario.get('nombre')?.hasError('required') && formulario.get('nombre')?.touched">
+                          El campo nombre es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-6">
+                      <label for="apellidopat" class="form-label">Apellido Paterno *</label>
+                        <input type="text" id="apellidopat" formControlName="appaterno" placeholder="Ingresar el apellido paterno del personal" class="form-control">
+                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('appaterno')?.hasError('required') && formulario.get('appaterno')?.touched"></i>
+                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('appaterno')?.valid"></i>
+                        <span class="text-error" *ngIf="formulario.get('appaterno')?.hasError('required') && formulario.get('appaterno')?.touched">
+                          El campo apellido paterno es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-6">
+                      <label for="apellidomat" class="form-label">Apellido Materno *</label>
+                        <input type="text" id="apellidomat" formControlName="apmaterno" placeholder="Ingresar el apellido materno del personal" class="form-control">
+                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('apmaterno')?.hasError('required') && formulario.get('apmaterno')?.touched"></i>
+                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('apmaterno')?.valid"></i>
+                        <span class="text-error" *ngIf="formulario.get('apmaterno')?.hasError('required') && formulario.get('apmaterno')?.touched">
+                          El campo apellido materno es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-6">
+                        <label for="telefono" class="form-label">Celular *</label>
+                        <input type="text" id="telefono" formControlName="telefono" class="form-control" placeholder="Ingresar el numero de celular del personal">
+                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('telefono')?.hasError('required') && formulario.get('telefono')?.touched"></i>
+                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('telefono')?.valid"></i>
+                        <span class="text-error" *ngIf="formulario.get('telefono')?.hasError('required') && formulario.get('telefono')?.touched">
+                          El campo celular es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-6">
+                        <label for="fechanac" class="form-label">Fecha de Nacimiento *</label>
+                        <input type="date" id="fechanac" formControlName="fechanac" class="form-control" >
+                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('fechanac')?.hasError('required') && formulario.get('fechanac')?.touched"></i>
+                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('fechanac')?.valid"></i>
+                        <span class="text-error" *ngIf="formulario.get('fechanac')?.hasError('required') && formulario.get('fechanac')?.touched">
+                          El campo fecha de nacimiento es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-12">
+                      <label for="direccion" class="form-label">Direccion *</label>
+                        <input type="text" id="direccion" formControlName="direccion" placeholder="Ingresar la direccion del domicilio del personal" class="form-control">
+                        <i class="formulario__validacion-estado fas fa-times-circle" *ngIf="formulario.get('direccion')?.hasError('required') && formulario.get('direccion')?.touched"></i>
+                      <i class="formulario__validacion-correcto fa-solid fa-circle-check" *ngIf="formulario.get('direccion')?.valid"></i>
+                        <span class="text-error" *ngIf="formulario.get('direccion')?.hasError('required') && formulario.get('direccion')?.touched">
+                          El campo direccion es <strong>requerido</strong>
+                        </span>
+                      </div> 
+                      <div class="col-12" style="text-align:center">
+                        <h4>DATOS DEL USUARIO</h4>
+                      </div>
+                      <div class="col-6">
+                        <label for="usuario" class="form-label">Usuario *</label>
+                        <input type="text" id="usuario" formControlName="usuario" placeholder="Ingresar Usuario"
+                          class="form-control">
+                          <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('usuario')?.hasError('required') && formulario.get('usuario')?.touched"></i>
+                        <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('usuario')?.valid"></i>
+                        <span class="text-error"
+                          *ngIf="formulario.get('usuario')?.hasError('required') && formulario.get('usuario')?.touched">
+                          El campo usuario es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-6">
+                        <label for="contraseña" class="form-label">Contraseña *</label>
+                        <input type="password" id="contraseña" formControlName="contraseña" placeholder="Ingresar Contraseña"
+                          class="form-control">
+                          <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('contraseña')?.hasError('required') && formulario.get('contraseña')?.touched"></i>
+                        <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('contraseña')?.valid"></i>
+                        <span class="text-error"
+                          *ngIf="formulario.get('contraseña')?.hasError('required') && formulario.get('contraseña')?.touched">
+                          El campo contraseña es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-3">
+                        <label for="horaentrada" class="form-label">Hora de Entrada *</label>
+                        <input type="time" class="form-control" id="horaentrada" formControlName="horaentrada">
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('horaentrada')?.hasError('required') && formulario.get('horaentrada')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('horaentrada')?.valid"></i>
+                        <span class="text-error"
+                          *ngIf="formulario.get('horaentrada')?.hasError('required') && formulario.get('horaentrada')?.touched">
+                          El campo hora de entrada es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-3">
+                        <label for="horasalida" class="form-label">Hora de Salida *</label>
+                        <input type="time" class="form-control" id="horasalida" formControlName="horasalida">
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('horasalida')?.hasError('required') && formulario.get('horasalida')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('horasalida')?.valid"></i>
+                        <span class="text-error"
+                          *ngIf="formulario.get('horasalida')?.hasError('required') && formulario.get('horasalida')?.touched">
+                          El campo hora de salida es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="col-3">
+                        <label for="salario" class="form-label">Salario *</label>
+                        <input type="number" class="form-control" id="salario" formControlName="Salario">
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('Salario')?.hasError('required') && formulario.get('Salario')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('Salario')?.valid"></i>
+                        <span class="text-error"
+                          *ngIf="formulario.get('Salario')?.hasError('required') && formulario.get('Salario')?.touched">
+                          El campo salario es <strong>requerido</strong>
+                        </span>
+                      </div>
+                      <div class="seleccionar col-3">
+                        <label for="rol" class="form-label">Rol *</label>
+                        <select id="rol" class="form-select" formControlName="idrol">
+                          <option value="{{item.idrol}}" *ngFor="let item of lsrol">{{item.nombre}}</option>
+                        </select>
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('idrol')?.hasError('required') && formulario.get('idrol')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('idrol')?.valid"></i>
+                        <span class="text-error"
+                            *ngIf="formulario.get('idrol')?.hasError('required') && formulario.get('idrol')?.touched">
+                            El campo rol es <strong>requerido</strong>
+                        </span>
+                      </div>
+        
+              </div>
+              <div class="modal-footer mt-2">
+                  <button type="button" class="btn btn-secondary" (click)="mostrar(0)"
+                      id="idbotoncerrar">Close</button>
+                  <button [disabled]="formulario.invalid" type="submit"
+                      class="btn btn-primary ms-2">{{textoboton}}</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
