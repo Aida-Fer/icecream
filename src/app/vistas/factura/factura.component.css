@@ -1,0 +1,17 @@
+#imprimir{
+    padding: 20px;
+}
+
+.inf p{
+    line-height: 15px;
+}
+
+.recuadro{
+    line-height: 10px;
+    border: 1px solid white;
+    padding: 10px;
+}
+
+.borde{
+    padding: 20px;
+}
