@@ -35,6 +35,7 @@ export class ProduccionComponent implements OnInit {
             idreceta: new FormControl('', Validators.required),
             fechavenc: new FormControl('', Validators.required),
             cantidad: new FormControl('', Validators.required),
+            unidad: new FormControl('', Validators.required),
         })
     }
 
@@ -59,6 +60,7 @@ export class ProduccionComponent implements OnInit {
     precarga() {
         this.api.getsabores().subscribe(data => {
             this.lsabores = data.result;
+            console.log(data);
         });
         // this.api.getAllingredientes().subscribe(data => {
         //     this.lsing = data.result;

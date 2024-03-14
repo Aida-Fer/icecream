@@ -105,8 +105,8 @@ export class RecetasComponent {
     cargar() {
         console.log(this.formulario.get('idsabor')!.value);
         var selectemp = this.lsing.find(x => x.idingredientes == Number(this.formulario.get('idsabor')!.value));
-        var bus = this.lsingredientes.find(x => x.idingredientes == selectemp?.idingredientes);
-        if (bus == null) {
+        var ing = this.lsingredientes.find(x => x.idingredientes == selectemp?.idingredientes);
+        if (ing == null) {
             this.lsingredientes.push({ 'nombre': selectemp?.nombre, 'sabor': this.formulario.get('sabor')?.value, 'cantidad': this.formulario.get('medida')?.value, 'idingredientes': selectemp?.idingredientes });
             console.log(this.lsingredientes);        
         }else{

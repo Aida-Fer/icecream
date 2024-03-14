@@ -15,10 +15,11 @@ import { ProduccionComponent } from './vistas/produccion/produccion.component';
 import { ClientesComponent } from './vistas/clientes/clientes.component';
 import { VentasComponent } from './vistas/ventas/ventas.component';
 import { FacturaComponent } from './vistas/factura/factura.component';
+import { WebComponent } from './vistas/web/web.component';
 // import { AsaboresComponent } from './vistas/sabores/asabores/asabores.component';
 
 const routes: Routes = [
-  {path: "" , redirectTo:"login", pathMatch: "full"},
+  {path: "" , redirectTo:"web", pathMatch: "full"},
   {path: "login" , component: LoginComponent},
   {path:"dashboard", component: DashboardComponent},
   {path: "usu" , component: UsuariosComponent},
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: "clie" , component: ClientesComponent},
   {path: "ventas" , component: VentasComponent},
   {path: "factura/:id" , component: FacturaComponent},
+  {path: "web" , component: WebComponent},
   // { path: 'addSab', component: AsaboresComponent },
   {path: "**" , redirectTo:"/pag", pathMatch: "full"}
 ];

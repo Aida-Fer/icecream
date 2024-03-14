@@ -25,6 +25,7 @@ export class VentasService {
 
   getsabores():Observable<ResponseI>{
     let direccion = this.url + "api/sabores/allreg" ;
+    // let direccion = this.url + "api/produccion/allprod" ;
     const header = new HttpHeaders({
       'content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.getToken()

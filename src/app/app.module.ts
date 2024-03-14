@@ -26,6 +26,7 @@ import { ProduccionComponent } from './vistas/produccion/produccion.component';
 import { ClientesComponent } from './vistas/clientes/clientes.component';
 import { VentasComponent } from './vistas/ventas/ventas.component';
 import { FacturaComponent } from './vistas/factura/factura.component';
+import { WebComponent } from './vistas/web/web.component';
 
 // Libreria Bootstrap
 
@@ -49,6 +50,7 @@ import { FacturaComponent } from './vistas/factura/factura.component';
     ClientesComponent,
     VentasComponent,
     FacturaComponent,
+    WebComponent,
   ],
   imports: [
     BrowserModule,

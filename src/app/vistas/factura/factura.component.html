@@ -1,49 +1,52 @@
-<div style="width: 400px; height: 600px;" id="imprimir">
-    <div class="borde">
-        <div class="text-center inf">
-            <img src="assets/logo2.png" width="50px" alt="">
-            <p class="mt-2">Cel: 76188025</p>
-            <p>Direccion: Calle Bolivar al lado de la facultad de odontologia</p>
-        </div>
-        <div class="text-center">
-            <h4>NOTA DE ENTREGA Nº : {{factura}}</h4>
-        </div>
-        <div class="recuadro">
-            <p>Fecha: {{fecha}}</p>
-            <p>Señores: {{nombre}}</p>
-            <p>NIT/CI: {{ci}}</p>
-        </div>
-        <div>
-            <table style="width: 100%; text-align: center;">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>CANT.</th>
-                        <th>DESCRIPCION</th>
-                        <th>P.UNIT</th>
-                        <th>SUB TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of lista; let i = index">
-                        <td>{{i}}</td>
-                        <td>{{item.cantidad}}</td>
-                        <td>{{item.nombre}}</td>
-                        <td>{{item.precio}}</td>
-                        <td>{{item.cantidad*item.precio}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <hr>
-        <div>
-            <p>TOTAL Bs : <span>{{total}}</span></p>
-            <p>TOTAL FINAL : <span>{{total}}</span></p>
-            <!-- <p>EFECTIVO : <span></span></p>
-            <p>CAMBIO: <span></span></p> -->
-            <p>USUARIO: <span>{{usuario}}</span></p>
+<div class="box">
+    <div style="width: 400px; height: 600px;" id="imprimir">
+        <div class="borde">
+            <div class="text-center inf">
+                <img src="assets/logo2.png" width="50px" alt="">
+                <p class="mt-2">Cel: 76188025</p>
+                <p>Direccion: Calle Bolivar al lado de la facultad de odontologia</p>
+            </div>
+            <div class="text-center">
+                <h4>NOTA DE ENTREGA Nº : {{factura}}</h4>
+            </div>
+            <div class="recuadro">
+                <p>Fecha: {{fecha}}</p>
+                <p>Señores: {{nombre}}</p>
+                <p>NIT/CI: {{ci}}</p>
+            </div>
+            <div>
+                <table style="width: 100%; text-align: center;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>CANT.</th>
+                            <th>DESCRIPCION</th>
+                            <th>P.UNIT</th>
+                            <th>SUB TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of lista; let i = index">
+                            <td>{{i}}</td>
+                            <td>{{item.cantidad}}</td>
+                            <td>{{item.nombre}}</td>
+                            <td>{{item.precio}}</td>
+                            <td>{{item.cantidad*item.precio}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div>
+                <p>TOTAL Bs : <span>{{total}}</span></p>
+                <p>TOTAL FINAL : <span>{{total}}</span></p>
+                <!-- <p>EFECTIVO : <span></span></p>
+                <p>CAMBIO: <span></span></p> -->
+                <p>USUARIO: <span>{{usuario}}</span></p>
+            </div>
         </div>
     </div>
+    <br>
+    <br>
+    <button (click)="printDiv()" class="btn btn-primary btn-sm ms-auto">IMPRIMIR</button>
 </div>
-
-<button (click)="printDiv()">IMPRIMIR</button>

@@ -15,3 +15,17 @@
 .borde{
     padding: 20px;
 }
+/* .box{
+    position: relative;
+    width: 500px;
+    height: 750px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  
+  } */
