@@ -74,11 +74,9 @@ export class VentasComponent implements OnInit {
     }
 
     cargar() {
-        console.log(this.opcionSeleccionado);
         var selectemp = this.lsing.find(x => x.idreceta == this.opcionSeleccionado);
         var selectprod = this.lsproducto.find(x => x.idproducto == this.opcionproducto);
         this.lsingreso.push({ 'nombre': selectemp?.sabor, 'cantidad': this.formulario.get('unidades')?.value, 'idreceta': selectemp?.idreceta, 'producto': this.opcionproducto, 'productonombre':  selectprod.nombre});
-        console.log(this.lsingreso);
     }
 
     cargarlista() {
@@ -117,7 +115,6 @@ export class VentasComponent implements OnInit {
                     this.lsingreso = [];
                 }
             })
-        } else {
         }
     }
 

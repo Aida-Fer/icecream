@@ -44,7 +44,8 @@
                                         <td>{{item.nombre}}</td>
                                         <td>{{item.appaterno}}</td>
                                         <td>{{item.apmaterno}}</td>
-                                        <td><button class='btn btn-mod btn-sm' (click)="asignar(item.idpersona)"><i class='fa fa-edit'></i></button></td>
+                                        <td><button class='btn btn-mod btn-sm' (click)="asignar(item.idpersona)"><i class='fa fa-edit'></i></button><button class='btn btn-mod btn-sm ms-1' data-bs-toggle="modal"
+                                          data-bs-target="#modalpay" (click)="cargarhistorial(item.idpersona)">historial</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -153,4 +154,19 @@
             </form>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="modalpay" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Pagar Factura</h1>
+              <button type="button" id="btnclose" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            
+          </div>
+      </div>
+  </div>
 </div>

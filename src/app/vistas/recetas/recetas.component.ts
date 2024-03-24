@@ -37,7 +37,6 @@ export class RecetasComponent {
     //Formulario
     formulario = new FormGroup({
         sabor: new FormControl('', Validators.required),
-        cantidad: new FormControl('', Validators.required),
         peso: new FormControl('', Validators.required),
         idsabor: new FormControl('', Validators.required),
         medida: new FormControl('', Validators.required)
@@ -73,7 +72,6 @@ export class RecetasComponent {
     mandardatos(formu: any) {
         if (this.idsabores == 0) {
             this.apiSab.postSab(formu, this.lsingredientes).subscribe(data => {
-                console.log(data)
                 if (data.status == 'OK') {
                     Swal.fire({
                         title: 'Mensaje de Confirmacion',
@@ -83,6 +81,7 @@ export class RecetasComponent {
                     });
                     this.formulario.reset();
                     this.cambiar(0);
+                    this.cargarlista();
                 }
             })
         } else {
@@ -97,6 +96,7 @@ export class RecetasComponent {
                     this.formulario.reset();
                     this.cambiar(0);
                     this.idsabores = 0;
+                    this.cargarlista();
                 }
             })
         }
@@ -140,7 +140,6 @@ export class RecetasComponent {
             console.log(data);
             this.formulario.setValue({
                 'sabor': data.result.sabor,
-                'cantidad': data.result.cantidad,
                 'peso': data.result.peso,
                 'idsabor': '0',
                 'medida': '0'

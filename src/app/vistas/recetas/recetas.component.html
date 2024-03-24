@@ -103,20 +103,9 @@
                         </span>
                     </div>
                     <div class="col-3">
-                        <label for="cantidad" class="form-label">Cantidad *</label>
-                        <input type="number" id="cantidad" formControlName="cantidad"
-                            placeholder="Ingresar la cantidad del sabor" class="form-control">
-                            <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('cantidad')?.hasError('required') && formulario.get('cantidad')?.touched"></i>
-                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('cantidad')?.valid"></i>
-                        <span class="text-error"
-                            *ngIf="formulario.get('cantidad')?.hasError('required') && formulario.get('cantidad')?.touched">
-                            El campo cantidad es <strong>requerido</strong>
-                        </span>
-                    </div>
-                    <div class="col-3">
-                        <label for="peso" class="form-label">Peso *</label>
+                        <label for="peso" class="form-label">Bolas por Bandeja *</label>
                         <input type="number" id="peso" formControlName="peso"
-                            placeholder="Ingresar la peso del sabor" class="form-control">
+                            placeholder="Ingresar el numero de bolas por bandeja" class="form-control">
                             <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('cantidad')?.hasError('required') && formulario.get('peso')?.touched"></i>
                             <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('cantidad')?.valid"></i>
                         <span class="text-error"
