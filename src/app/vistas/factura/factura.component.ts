@@ -31,6 +31,7 @@ export class FacturaComponent implements OnInit{
       this.factura = data.result.idventa;
       this.fecha = data.result.fecha;
       this.ci = data.result.ci;
+      this.nombre = data.result.nombre;
       this.total = data.result.total;
       this.usuario = data.result.usuario;
       this.lista = data.mensaje;
