@@ -32,6 +32,7 @@ export class ClientesComponent implements OnInit {
   totalmodal: number = 0;
   pagemodal: number = 0;
   searchmodal: string = '';
+  idmodal: number = 0;
 
   constructor(private api: ClientesService) {
     this.formulario = new FormGroup({
@@ -63,6 +64,12 @@ export class ClientesComponent implements OnInit {
     this.page = num;
     this.cargarlista();
   }
+
+  cambiarpaginamodal(num: number) {
+    this.pagemodal = num;
+    this.cargarhistorial(this.idmodal);
+  }
+
 
   cambiar(opcion: any) {
     this.funcion = opcion;
@@ -179,7 +186,8 @@ export class ClientesComponent implements OnInit {
   }
 
   cargarhistorial(id: number) {
-    this.api.gethistorial({ length: 5, page: this.pagemodal, search: this.busqueda }).subscribe(data => {
+    this.idmodal = id;
+    this.api.gethistorial({ length: 5, page: this.pagemodal, search: this.busqueda , id: id}).subscribe(data => {
       this.lshistorial = data.result;
       this.totalmodal = data.paginas;
     })
