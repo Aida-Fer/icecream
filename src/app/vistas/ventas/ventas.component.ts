@@ -23,7 +23,7 @@ export class VentasComponent implements OnInit {
     total: number = 0;
     totalvalor: number = 0;
     lista: any = [];
-    length: number = 10;
+    length: number = 2;
 
     titulo: string = '';
     textoboton: string = '';
