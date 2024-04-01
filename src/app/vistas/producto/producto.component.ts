@@ -46,7 +46,7 @@ export class ProductoComponent implements OnInit {
         nombre       : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
         nroporcion   : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(11), Validators.pattern(/^[0-9]\d*$/)]],
         costobase    : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10), Validators.pattern(/^[0-9]\d*$/)]],
-        idcategoria  : ['', [Validators.required]],
+        idcategoria  : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
         precio  : ['', [Validators.required]]
       });
 
@@ -111,14 +111,21 @@ export class ProductoComponent implements OnInit {
             if (data.status == 'OK') {
                 Swal.fire({
                     title: 'Mensaje de Confirmacion',
-                    text: 'Producto registrada correctamente',
+                    text: 'Producto registrado correctamente',
                     icon: "success",
                     // background: '#CCBBFF'
                 });
                 this.registerform.reset();
                 this.cambiar(0);
                 this.cargarlista();
-            }
+            }else{
+              Swal.fire({
+                  title: 'Error',
+                  html: data.mensaje,
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+              })
+          }
         })
     } else {
         this.apiproducto.putProd(formu, this.idproducto).subscribe(data => {
@@ -132,7 +139,14 @@ export class ProductoComponent implements OnInit {
                 this.registerform.reset();
                 this.cambiar(0);
                 this.cargarlista();
-            }
+            }else{
+              Swal.fire({
+                  title: 'Error',
+                  html: data.mensaje,
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+              })
+          }
         })
     }
   }
@@ -150,6 +164,7 @@ export class ProductoComponent implements OnInit {
             nombre : data.result.nombre,
             nroporcion : data.result.nroporcion,
             costobase : data.result.costobase,
+            precio: data.result.precio,
             idcategoria : data.result.idcategoria
         });
     })

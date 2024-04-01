@@ -5,4 +5,5 @@ export interface ResponseI
   result:any;
   mensaje?:any;
   detalles?:any;
+  errors?: any;
 }
