@@ -52,7 +52,7 @@ export class IngresosComponent implements OnInit{
             this.lista = [];
             this.cargarlista();
         } else {
-            this.titulo = 'Registro de Ingreso';
+            this.titulo = 'Registro de Inventario';
             this.textoboton = 'registrar';
             this.formulario.reset();
             this.precarga();
@@ -97,7 +97,7 @@ export class IngresosComponent implements OnInit{
 
     asignar(id: number) {
         this.precarga();
-        this.titulo = 'Modificar Sabor';
+        this.titulo = 'Modificar Inventario';
         this.textoboton = 'Modificar';
         this.funcion = 1;
         this.idseleccionado = id;

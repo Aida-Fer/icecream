@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonaI } from 'src/app/Models/persona.interface';
 import { ClientesService } from 'src/app/service/clientes/clientes.service';
 import Swal from 'sweetalert2';
@@ -23,7 +23,7 @@ export class ClientesComponent implements OnInit {
 
   titulo: string = '';
   textoboton: string = '';
-  formulario!: FormGroup;
+  registerform!: FormGroup;
 
   lsclie: PersonaI[] = [];
   lshistorial: any[] = [];
@@ -34,20 +34,23 @@ export class ClientesComponent implements OnInit {
   searchmodal: string = '';
   idmodal: number = 0;
 
-  constructor(private api: ClientesService) {
-    this.formulario = new FormGroup({
-      nombre: new FormControl('', Validators.required),
-      appaterno: new FormControl('', Validators.required),
-      apmaterno: new FormControl('', Validators.required),
-      fechanac: new FormControl('', Validators.required),
-      ci: new FormControl('', Validators.required),
-      direccion: new FormControl('', Validators.required),
-      telefono: new FormControl('', Validators.required),
-    })
+  constructor(private formBuilder: FormBuilder,private api: ClientesService) {
+    //Formulario
+    this.registerform = this.formBuilder.group({
+      ci: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(20)]],
+      nombre       : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
+      appaterno: ['', [Validators.minLength(6), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
+      apmaterno: ['', [Validators.minLength(6), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
+      fechanac: ['', [Validators.required]],
+      direccion: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(100)]],
+      telefono: ['', [Validators.minLength(7), Validators.maxLength(100)]],
+    });
   }
   ngOnInit(): void {
     this.cargarlista();
   }
+  //Validaciones
+  get f() { return this.registerform.controls;}
   //Listar
   cargarlista() {
     this.api.getClie({ length: this.length, page: this.page, search: this.busqueda }).subscribe(data => {
@@ -74,7 +77,7 @@ export class ClientesComponent implements OnInit {
   cambiar(opcion: any) {
     this.funcion = opcion;
     if (this.funcion != 0) {
-      this.formulario.reset();
+      this.registerform.reset();
       this.lista = [];
       this.cargarlista();
     }
@@ -83,13 +86,13 @@ export class ClientesComponent implements OnInit {
   mostrar(numero: number) {
     this.funcion = numero;
     if (this.funcion == 0) {
-      this.formulario.reset();
+      this.registerform.reset();
       this.lista = [];
       this.cargarlista();
     } else {
       this.titulo = 'Registro de Clientes';
       this.textoboton = 'Guardar';
-      this.formulario.reset();
+      this.registerform.reset();
       //this.precarga();
     }
   }
@@ -104,10 +107,17 @@ export class ClientesComponent implements OnInit {
             icon: "success",
             // background: '#CCBBFF'
           });
-          this.formulario.reset();
+          this.registerform.reset();
           this.cambiar(0);
           this.cargarlista();
-        }
+        }else{
+          Swal.fire({
+              title: 'Error',
+              html: data.mensaje,
+              icon: 'error',
+              confirmButtonText: 'OK'
+          })
+      }
       })
     } else {
       this.api.putClie(formu, this.idclientes).subscribe(data => {
@@ -118,10 +128,17 @@ export class ClientesComponent implements OnInit {
             icon: "success",
             // background: '#CCBBFF'
           });
-          this.formulario.reset();
+          this.registerform.reset();
           this.cambiar(0);
           this.cargarlista();
-        }
+        }else{
+          Swal.fire({
+              title: 'Error',
+              html: data.mensaje,
+              icon: 'error',
+              confirmButtonText: 'OK'
+          })
+      }
       })
     }
   }
@@ -134,7 +151,7 @@ export class ClientesComponent implements OnInit {
     this.idclientes = $event;
     this.api.getClieID($event).subscribe(data => {
       console.log(data);
-      this.formulario.setValue({
+      this.registerform.setValue({
         nombre: data.result.nombre,
         apmaterno: data.result.apmaterno,
         appaterno: data.result.appaterno,

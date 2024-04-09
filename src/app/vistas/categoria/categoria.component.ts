@@ -38,7 +38,7 @@ export class CategoriaComponent {
     ngOnInit(): void {
       //Formulario
       this.registerform = this.formBuilder.group({
-        nombre   : ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
+        nombre   : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
       });
       //Listar Producto
       this.cargarlista();
@@ -78,7 +78,7 @@ export class CategoriaComponent {
         this.lista = [];
         this.cargarlista();
     } else {
-        this.titulo = 'Registro de Ingreso';
+        this.titulo = 'Registro de Categoría';
         this.textoboton = 'registrar';
         this.registerform.reset();
         //this.precarga();
@@ -98,7 +98,14 @@ export class CategoriaComponent {
                 this.registerform.reset();
                 this.cambiar(0);
                 this.cargarlista();
-            }
+            }else{
+              Swal.fire({
+                  title: 'Error',
+                  html: data.mensaje,
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+              })
+          }
         })
     } else {
         this.apiCategoria.putCat(formu, this.idcategoria).subscribe(data => {
@@ -112,7 +119,14 @@ export class CategoriaComponent {
                 this.registerform.reset();
                 this.cambiar(0);
                 this.cargarlista();
-            }
+            }else{
+              Swal.fire({
+                  title: 'Error',
+                  html: data.mensaje,
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+              })
+          }
         })
     }
   }
