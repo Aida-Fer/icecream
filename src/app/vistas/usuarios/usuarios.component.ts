@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from "../../service/usuarios/usuario.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import Swal from 'sweetalert2'
@@ -33,34 +33,39 @@ export class UsuariosComponent implements OnInit {
     closeResult = '';
     titulo : string = '';
     textoboton:string = '';
-    formulario!: FormGroup;
+    // formulario!: FormGroup;
+    registerform!: FormGroup;
     idusuario: number = 0;
     submitted = false;
 
     lsrol: RolI[] = [];
     usuarios: UsuarioI[] = [];
     constructor(private formBuilder: FormBuilder, private apiusuario: UsuarioService, private activerouter: ActivatedRoute, private router: Router, private api: ApiService) {
-      this.formulario = new FormGroup({
-        nombre: new FormControl('', Validators.required),
-            appaterno: new FormControl('', Validators.required),
-            apmaterno: new FormControl('', Validators.required),
-            fechanac: new FormControl('', Validators.required),
-            ci: new FormControl('', Validators.required),
-            direccion: new FormControl('', Validators.required),
-            telefono: new FormControl('', Validators.required),
-            usuario: new FormControl('', Validators.required),
-            contraseña: new FormControl('', Validators.required),
-            horaentrada: new FormControl('', Validators.required),
-            horasalida: new FormControl('', Validators.required),
-            Salario: new FormControl('', Validators.required),
-            idrol: new FormControl('', Validators.required)
-      })
+      //Formulario
+      this.registerform = this.formBuilder.group({
+        ci: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(20)]],
+        nombre       : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
+        appaterno: ['', [Validators.minLength(6), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
+        apmaterno: ['', [Validators.minLength(6), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
+        fechanac: ['', [Validators.required]],
+        direccion: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(100)]],
+        telefono: ['', [Validators.minLength(7), Validators.maxLength(100)]],
+        usuario: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+        contraseña: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+        horaentrada: ['', [Validators.required]],
+        horasalida: ['', [Validators.required]],
+        Salario: ['', [Validators.required, Validators.maxLength(10)]],
+        idrol    : ['', [Validators.required]],
+      });
     }
 
     ngOnInit(): void {
+        //Listar
         this.cargarlista();
         this.listarrol();
     }
+    //Validaciones
+    get f() { return this.registerform.controls;}
     //Listar
     cargarlista() {
       this.apiusuario.getAllUser({length: this.length, page: this.page, search: this.busqueda }).subscribe(data => {
@@ -87,7 +92,7 @@ export class UsuariosComponent implements OnInit {
     cambiar(opcion: any) {
       this.funcion = opcion;
       if (this.funcion != 0) {
-          this.formulario.reset();
+          this.registerform.reset();
           this.lista = [];
           // this.listarIng();
           this.cargarlista();
@@ -97,13 +102,13 @@ export class UsuariosComponent implements OnInit {
     mostrar(numero: number) {
       this.funcion = numero;
       if (this.funcion == 0) {
-        this.formulario.reset();
+        this.registerform.reset();
         this.lista = [];
         this.cargarlista();
     } else {
         this.titulo = 'Registro de Usuario';
         this.textoboton = 'Guardar';
-        this.formulario.reset();
+        this.registerform.reset();
         //this.precarga();
     }
   }
@@ -118,10 +123,17 @@ export class UsuariosComponent implements OnInit {
                       icon: "success",
                       // background: '#CCBBFF'
                   });
-                  this.formulario.reset();
+                  this.registerform.reset();
                   this.cambiar(0);
                   this.cargarlista();
-              }
+              }else{
+                Swal.fire({
+                    title: 'Error',
+                    html: data.mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+            }
           })
       } else {
           this.apiusuario.putuser(formu, this.idusuario).subscribe(data => {
@@ -132,10 +144,17 @@ export class UsuariosComponent implements OnInit {
                       icon: "success",
                       // background: '#CCBBFF'
                   });
-                  this.formulario.reset();
+                  this.registerform.reset();
                   this.cambiar(0);
                   this.cargarlista();
-              }
+              }else{
+                Swal.fire({
+                    title: 'Error',
+                    html: data.mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+            }
           })
       }
     }
@@ -148,7 +167,7 @@ export class UsuariosComponent implements OnInit {
       this.idusuario = $event;
       this.apiusuario.getUser($event).subscribe(data => {
           console.log(data);
-          this.formulario.setValue({
+          this.registerform.setValue({
               nombre : data.result.nombre,
               apmaterno : data.result.apmaterno,
               appaterno : data.result.appaterno,

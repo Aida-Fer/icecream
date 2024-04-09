@@ -4,7 +4,7 @@
       <div class="container-fluid" *ngIf="funcion==0">
           <div class="row mb-2 mt-5">
               <div class="col-sm-6">
-                  <h1 class="m-0"><b>GESTION Usuario</b></h1>
+                  <h1 class="m-0"><b>GESTION USUARIO</b></h1>
               </div>
           </div>
       </div>
@@ -90,68 +90,59 @@
           <div class="card-header">
               <h3 class="card-title"><b>{{titulo}}</b></h3>
           </div>
-          <form class="formulario" [formGroup]="formulario" (ngSubmit)="mandardatos(formulario.value)">
+          <form class="formulario" [formGroup]="registerform" (ngSubmit)="mandardatos(registerform.value)">
               <div class="row">
                   <div class="col-3">
-                      <label for="ci" class="form-label">Ci *</label>
+                      <label for="ci" class="form-label">Ci *</label>formulario
                         <input type="text" id="ci" formControlName="ci" placeholder="Ingresar CI" class="form-control"  maxlength="8">
-                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('ci')?.hasError('required') && formulario.get('ci')?.touched"></i>
-                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('ci')?.valid"></i>
-                        <span class="text-error" *ngIf="formulario.get('ci')?.hasError('required') && formulario.get('ci')?.touched">
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="registerform.get('ci')?.hasError('required') && registerform.get('ci')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="registerform.get('ci')?.valid"></i>
+                        <span class="text-error" *ngIf="registerform.get('ci')?.hasError('required') && registerform.get('ci')?.touched">
                           El campo ci es <strong>requerido</strong>
                         </span>
                       </div>
                       <div class="col-9">
                         <label for="nombre" class="form-label">Nombres *</label>
                         <input type="text" id="nombre" formControlName="nombre" placeholder="Ingresar nombres del personal" class="form-control">
-                        <i class="formulario__validacion-estado-nueve fas fa-times-circle" *ngIf="formulario.get('nombre')?.hasError('required') && formulario.get('nombre')?.touched"></i>
-                      <i class="formulario__validacion-correcto-nueve fa-solid fa-circle-check" *ngIf="formulario.get('nombre')?.valid"></i>
-                        <span class="text-error" *ngIf="formulario.get('nombre')?.hasError('required') && formulario.get('nombre')?.touched">
+                        <i class="formulario__validacion-estado-nueve fas fa-times-circle" *ngIf="registerform.get('nombre')?.hasError('required') && registerform.get('nombre')?.touched"></i>
+                      <i class="formulario__validacion-correcto-nueve fa-solid fa-circle-check" *ngIf="registerform.get('nombre')?.valid"></i>
+                        <span class="text-error" *ngIf="registerform.get('nombre')?.hasError('required') && registerform.get('nombre')?.touched">
                           El campo nombre es <strong>requerido</strong>
                         </span>
                       </div>
                       <div class="col-6">
                       <label for="apellidopat" class="form-label">Apellido Paterno *</label>
                         <input type="text" id="apellidopat" formControlName="appaterno" placeholder="Ingresar el apellido paterno del personal" class="form-control">
-                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('appaterno')?.hasError('required') && formulario.get('appaterno')?.touched"></i>
-                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('appaterno')?.valid"></i>
-                        <span class="text-error" *ngIf="formulario.get('appaterno')?.hasError('required') && formulario.get('appaterno')?.touched">
-                          El campo apellido paterno es <strong>requerido</strong>
-                        </span>
+                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('appaterno')?.hasError('required') && registerform.get('appaterno')?.touched"></i>
+                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('appaterno')?.valid"></i>
                       </div>
                       <div class="col-6">
                       <label for="apellidomat" class="form-label">Apellido Materno *</label>
                         <input type="text" id="apellidomat" formControlName="apmaterno" placeholder="Ingresar el apellido materno del personal" class="form-control">
-                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('apmaterno')?.hasError('required') && formulario.get('apmaterno')?.touched"></i>
-                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('apmaterno')?.valid"></i>
-                        <span class="text-error" *ngIf="formulario.get('apmaterno')?.hasError('required') && formulario.get('apmaterno')?.touched">
-                          El campo apellido materno es <strong>requerido</strong>
-                        </span>
+                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('apmaterno')?.hasError('required') && registerform.get('apmaterno')?.touched"></i>
+                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('apmaterno')?.valid"></i>
                       </div>
                       <div class="col-6">
                         <label for="telefono" class="form-label">Celular *</label>
                         <input type="text" id="telefono" formControlName="telefono" class="form-control" placeholder="Ingresar el numero de celular del personal">
-                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('telefono')?.hasError('required') && formulario.get('telefono')?.touched"></i>
-                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('telefono')?.valid"></i>
-                        <span class="text-error" *ngIf="formulario.get('telefono')?.hasError('required') && formulario.get('telefono')?.touched">
-                          El campo celular es <strong>requerido</strong>
-                        </span>
+                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('telefono')?.hasError('required') && registerform.get('telefono')?.touched"></i>
+                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('telefono')?.valid"></i>
                       </div>
                       <div class="col-6">
                         <label for="fechanac" class="form-label">Fecha de Nacimiento *</label>
                         <input type="date" id="fechanac" formControlName="fechanac" class="form-control" >
-                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('fechanac')?.hasError('required') && formulario.get('fechanac')?.touched"></i>
-                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('fechanac')?.valid"></i>
-                        <span class="text-error" *ngIf="formulario.get('fechanac')?.hasError('required') && formulario.get('fechanac')?.touched">
+                        <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('fechanac')?.hasError('required') && registerform.get('fechanac')?.touched"></i>
+                      <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('fechanac')?.valid"></i>
+                        <span class="text-error" *ngIf="registerform.get('fechanac')?.hasError('required') && registerform.get('fechanac')?.touched">
                           El campo fecha de nacimiento es <strong>requerido</strong>
                         </span>
                       </div>
                       <div class="col-12">
                       <label for="direccion" class="form-label">Direccion *</label>
                         <input type="text" id="direccion" formControlName="direccion" placeholder="Ingresar la direccion del domicilio del personal" class="form-control">
-                        <i class="formulario__validacion-estado fas fa-times-circle" *ngIf="formulario.get('direccion')?.hasError('required') && formulario.get('direccion')?.touched"></i>
-                      <i class="formulario__validacion-correcto fa-solid fa-circle-check" *ngIf="formulario.get('direccion')?.valid"></i>
-                        <span class="text-error" *ngIf="formulario.get('direccion')?.hasError('required') && formulario.get('direccion')?.touched">
+                        <i class="formulario__validacion-estado fas fa-times-circle" *ngIf="registerform.get('direccion')?.hasError('required') && registerform.get('direccion')?.touched"></i>
+                      <i class="formulario__validacion-correcto fa-solid fa-circle-check" *ngIf="registerform.get('direccion')?.valid"></i>
+                        <span class="text-error" *ngIf="registerform.get('direccion')?.hasError('required') && registerform.get('direccion')?.touched">
                           El campo direccion es <strong>requerido</strong>
                         </span>
                       </div> 
@@ -162,10 +153,10 @@
                         <label for="usuario" class="form-label">Usuario *</label>
                         <input type="text" id="usuario" formControlName="usuario" placeholder="Ingresar Usuario"
                           class="form-control">
-                          <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('usuario')?.hasError('required') && formulario.get('usuario')?.touched"></i>
-                        <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('usuario')?.valid"></i>
+                          <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('usuario')?.hasError('required') && registerform.get('usuario')?.touched"></i>
+                        <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('usuario')?.valid"></i>
                         <span class="text-error"
-                          *ngIf="formulario.get('usuario')?.hasError('required') && formulario.get('usuario')?.touched">
+                          *ngIf="registerform.get('usuario')?.hasError('required') && registerform.get('usuario')?.touched">
                           El campo usuario es <strong>requerido</strong>
                         </span>
                       </div>
@@ -173,40 +164,40 @@
                         <label for="contraseña" class="form-label">Contraseña *</label>
                         <input type="password" id="contraseña" formControlName="contraseña" placeholder="Ingresar Contraseña"
                           class="form-control">
-                          <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('contraseña')?.hasError('required') && formulario.get('contraseña')?.touched"></i>
-                        <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('contraseña')?.valid"></i>
+                          <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('contraseña')?.hasError('required') && registerform.get('contraseña')?.touched"></i>
+                        <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('contraseña')?.valid"></i>
                         <span class="text-error"
-                          *ngIf="formulario.get('contraseña')?.hasError('required') && formulario.get('contraseña')?.touched">
+                          *ngIf="registerform.get('contraseña')?.hasError('required') && registerform.get('contraseña')?.touched">
                           El campo contraseña es <strong>requerido</strong>
                         </span>
                       </div>
                       <div class="col-3">
                         <label for="horaentrada" class="form-label">Hora de Entrada *</label>
                         <input type="time" class="form-control" id="horaentrada" formControlName="horaentrada">
-                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('horaentrada')?.hasError('required') && formulario.get('horaentrada')?.touched"></i>
-                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('horaentrada')?.valid"></i>
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="registerform.get('horaentrada')?.hasError('required') && registerform.get('horaentrada')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="registerform.get('horaentrada')?.valid"></i>
                         <span class="text-error"
-                          *ngIf="formulario.get('horaentrada')?.hasError('required') && formulario.get('horaentrada')?.touched">
+                          *ngIf="registerform.get('horaentrada')?.hasError('required') && registerform.get('horaentrada')?.touched">
                           El campo hora de entrada es <strong>requerido</strong>
                         </span>
                       </div>
                       <div class="col-3">
                         <label for="horasalida" class="form-label">Hora de Salida *</label>
                         <input type="time" class="form-control" id="horasalida" formControlName="horasalida">
-                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('horasalida')?.hasError('required') && formulario.get('horasalida')?.touched"></i>
-                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('horasalida')?.valid"></i>
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="registerform.get('horasalida')?.hasError('required') && registerform.get('horasalida')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="registerform.get('horasalida')?.valid"></i>
                         <span class="text-error"
-                          *ngIf="formulario.get('horasalida')?.hasError('required') && formulario.get('horasalida')?.touched">
+                          *ngIf="registerform.get('horasalida')?.hasError('required') && registerform.get('horasalida')?.touched">
                           El campo hora de salida es <strong>requerido</strong>
                         </span>
                       </div>
                       <div class="col-3">
                         <label for="salario" class="form-label">Salario *</label>
                         <input type="number" class="form-control" id="salario" formControlName="Salario">
-                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('Salario')?.hasError('required') && formulario.get('Salario')?.touched"></i>
-                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('Salario')?.valid"></i>
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="registerform.get('Salario')?.hasError('required') && registerform.get('Salario')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="registerform.get('Salario')?.valid"></i>
                         <span class="text-error"
-                          *ngIf="formulario.get('Salario')?.hasError('required') && formulario.get('Salario')?.touched">
+                          *ngIf="registerform.get('Salario')?.hasError('required') && registerform.get('Salario')?.touched">
                           El campo salario es <strong>requerido</strong>
                         </span>
                       </div>
@@ -215,10 +206,10 @@
                         <select id="rol" class="form-select" formControlName="idrol">
                           <option value="{{item.idrol}}" *ngFor="let item of lsrol">{{item.nombre}}</option>
                         </select>
-                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="formulario.get('idrol')?.hasError('required') && formulario.get('idrol')?.touched"></i>
-                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="formulario.get('idrol')?.valid"></i>
+                        <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="registerform.get('idrol')?.hasError('required') && registerform.get('idrol')?.touched"></i>
+                        <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="registerform.get('idrol')?.valid"></i>
                         <span class="text-error"
-                            *ngIf="formulario.get('idrol')?.hasError('required') && formulario.get('idrol')?.touched">
+                            *ngIf="registerform.get('idrol')?.hasError('required') && registerform.get('idrol')?.touched">
                             El campo rol es <strong>requerido</strong>
                         </span>
                       </div>
@@ -227,7 +218,7 @@
               <div class="modal-footer mt-2">
                   <button type="button" class="btn btn-secondary" (click)="mostrar(0)"
                       id="idbotoncerrar">Close</button>
-                  <button [disabled]="formulario.invalid" type="submit"
+                  <button type="submit"
                       class="btn btn-primary ms-2">{{textoboton}}</button>
               </div>
           </form>
