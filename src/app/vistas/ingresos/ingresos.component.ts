@@ -102,7 +102,6 @@ export class IngresosComponent implements OnInit{
         this.funcion = 1;
         this.idseleccionado = id;
         this.api.getIngreso(id).subscribe(data => {
-            console.log(data);
             this.formulario.setValue({
                 'idproveedor': data.result.idproveedor,
                 'fecha': data.result.fecha,
@@ -149,6 +148,7 @@ export class IngresosComponent implements OnInit{
     }
 
     eliminar(id:number){
+        this.totalvalor = this.totalvalor - this.lsingreso[id].cantidad * this.lsingreso[id].CostoU;
         this.lsingreso.splice(id,1);
     }
 }
