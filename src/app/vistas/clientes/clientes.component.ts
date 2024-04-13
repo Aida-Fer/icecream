@@ -39,8 +39,8 @@ export class ClientesComponent implements OnInit {
     this.registerform = this.formBuilder.group({
       ci: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(20)]],
       nombre       : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
-      appaterno: ['', [Validators.minLength(6), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
-      apmaterno: ['', [Validators.minLength(6), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
+      appaterno: ['', [Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
+      apmaterno: ['', [Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[a-z\s\u00E0-\u00FC\u00f1]*$/i)]],
       fechanac: ['', [Validators.required]],
       direccion: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(100)]],
       telefono: ['', [Validators.minLength(7), Validators.maxLength(100)]],
@@ -96,7 +96,71 @@ export class ClientesComponent implements OnInit {
       //this.precarga();
     }
   }
+  // mandardatos(formu: any) {
+  //   if (this.idclientes == 0) {
+  //     this.api.postClie(formu).subscribe(data => {
+  //       console.log(data)
+  //       if (data.status == 'OK') {
+  //         Swal.fire({
+  //           title: 'Mensaje de Confirmacion',
+  //           text: 'Cliente registrada correctamente',
+  //           icon: "success",
+  //           // background: '#CCBBFF'
+  //         });
+  //         this.registerform.reset();
+  //         this.cambiar(0);
+  //         this.cargarlista();
+  //       }else{
+  //         Swal.fire({
+  //             title: 'Error',
+  //             html: data.mensaje,
+  //             icon: 'error',
+  //             confirmButtonText: 'OK'
+  //         })
+  //     }
+  //     })
+  //   } else {
+  //     this.api.putClie(formu, this.idclientes).subscribe(data => {
+  //       if (data.status == 'OK') {
+  //         Swal.fire({
+  //           title: 'Mensaje de Confirmacion',
+  //           text: 'Cliente actualizado correctamente',
+  //           icon: "success",
+  //           // background: '#CCBBFF'
+  //         });
+  //         this.registerform.reset();
+  //         this.cambiar(0);
+  //         this.cargarlista();
+  //       }else{
+  //         Swal.fire({
+  //             title: 'Error',
+  //             html: data.mensaje,
+  //             icon: 'error',
+  //             confirmButtonText: 'OK'
+  //         })
+  //     }
+  //     })
+  //   }
+  // }
   mandardatos(formu: any) {
+    // Obtener la fecha de nacimiento del formulario
+    const fechaNacimiento = new Date(formu.fechanac);
+  
+    // Obtener la fecha actual
+    const fechaActual = new Date();
+  
+    // Comparar la fecha de nacimiento con la fecha actual
+    if (fechaNacimiento > fechaActual) {
+      Swal.fire({
+        title: 'Error',
+        text: 'La fecha de nacimiento no puede ser posterior a la actual',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      return; // Detener el proceso si la fecha de nacimiento es posterior a la actual
+    }
+  
+    // Continuar con la lógica de acuerdo al caso (inserción o actualización)
     if (this.idclientes == 0) {
       this.api.postClie(formu).subscribe(data => {
         console.log(data)
@@ -104,44 +168,43 @@ export class ClientesComponent implements OnInit {
           Swal.fire({
             title: 'Mensaje de Confirmacion',
             text: 'Cliente registrada correctamente',
-            icon: "success",
-            // background: '#CCBBFF'
+            icon: "success"
           });
           this.registerform.reset();
           this.cambiar(0);
           this.cargarlista();
-        }else{
+        } else {
           Swal.fire({
-              title: 'Error',
-              html: data.mensaje,
-              icon: 'error',
-              confirmButtonText: 'OK'
+            title: 'Error',
+            html: data.mensaje,
+            icon: 'error',
+            confirmButtonText: 'OK'
           })
-      }
-      })
+        }
+      });
     } else {
       this.api.putClie(formu, this.idclientes).subscribe(data => {
         if (data.status == 'OK') {
           Swal.fire({
             title: 'Mensaje de Confirmacion',
             text: 'Cliente actualizado correctamente',
-            icon: "success",
-            // background: '#CCBBFF'
+            icon: "success"
           });
           this.registerform.reset();
           this.cambiar(0);
           this.cargarlista();
-        }else{
+        } else {
           Swal.fire({
-              title: 'Error',
-              html: data.mensaje,
-              icon: 'error',
-              confirmButtonText: 'OK'
+            title: 'Error',
+            html: data.mensaje,
+            icon: 'error',
+            confirmButtonText: 'OK'
           })
-      }
-      })
+        }
+      });
     }
   }
+  
 
   //Modificar
   asignar($event: any) {
