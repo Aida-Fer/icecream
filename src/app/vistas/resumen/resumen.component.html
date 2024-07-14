@@ -1,23 +1,28 @@
 <app-header></app-header>
-<div class="container mt-2">
+<div class="container mt-5 card">
     <div class="text-center">
         <h3>Resumen de Inventario</h3>
     </div>
-    <div class="row">
-        <div class="col-4" *ngFor="let item of lista">
-            <div class="card mt-5">
-                <div class="lines"></div>
-                <div class="imgBx">
-                    <img src="../../../assets/Imagenes/Ingredientes.jpeg">
-                </div>
-                <div class="content">
-                    <div class="details">
-                        <h2>{{item.nombre}}</h2>
-                        <p><span>Cantidad: </span>{{item.cantidad +' '+item.unidad}}</p>
-                        <p><span>Unidades: </span>{{item.unidades}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="table-responsive"> 
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Nombre</th>
+                    <th>Unidad Métrica</th>
+                    <th>Unidades Existentes</th>
+                    <th>Cantidad Existente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of lista; index as i">
+                    <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{i}}</td>
+                    <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{item.nombre}}</td>
+                    <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{item.unidad}}</td>
+                    <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{item.unidades}}</td>
+                    <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{item.cantidad}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

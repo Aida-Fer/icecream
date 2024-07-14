@@ -20,6 +20,7 @@ export class ClientesComponent implements OnInit {
   totalvalor: number = 0;
   lista: any[] = [];
   length: number = 2;
+  compras: string = '';
 
   titulo: string = '';
   textoboton: string = '';
@@ -96,6 +97,7 @@ export class ClientesComponent implements OnInit {
       //this.precarga();
     }
   }
+
   mandardatos(formu: any) {
     if (this.idclientes == 0) {
       this.api.postClie(formu).subscribe(data => {
@@ -205,8 +207,11 @@ export class ClientesComponent implements OnInit {
   cargarhistorial(id: number) {
     this.idmodal = id;
     this.api.gethistorial({ length: 5, page: this.pagemodal, search: this.busqueda , id: id}).subscribe(data => {
+      console.log(data)
       this.lshistorial = data.result;
       this.totalmodal = data.paginas;
+      this.compras = data.total;
+      
     })
   }
 }

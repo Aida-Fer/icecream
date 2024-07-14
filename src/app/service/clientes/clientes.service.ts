@@ -63,12 +63,12 @@ export class ClientesService {
     return this.http.put<ResponseI>(direccion,idclie, {headers : header});
   }
 
-  gethistorial(lista:{}):Observable<ResponseI>{
+  gethistorial(lista:{}):Observable<any>{
     let direccion = this.url + "api/clientes/historial" ;
     const header = new HttpHeaders({
       'content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.getToken()
     })
-    return this.http.get<ResponseI>(direccion,{headers : header, params:lista});
+    return this.http.get<any>(direccion,{headers : header, params:lista});
   }
 }

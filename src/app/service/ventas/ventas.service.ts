@@ -33,6 +33,16 @@ export class VentasService {
     return this.http.get<ResponseI>(direccion,{headers : header});
   }
 
+  getexits():Observable<ResponseI>{
+    let direccion = this.url + "api/sabores/exist" ;
+    // let direccion = this.url + "api/produccion/allprod" ;
+    const header = new HttpHeaders({
+      'content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getToken()
+    })
+    return this.http.get<ResponseI>(direccion,{headers : header});
+  }
+
   getproducto():Observable<ResponseI>{
     let direccion = this.url + "api/productos/producto" ;
     const header = new HttpHeaders({

@@ -24,6 +24,7 @@ export class VentasComponent implements OnInit {
     totalvalor: number = 0;
     lista: any = [];
     length: number = 2;
+    existe: number = 0;
 
     titulo: string = '';
     textoboton: string = '';
@@ -65,25 +66,39 @@ export class VentasComponent implements OnInit {
     precarga() {
         this.api.getproducto().subscribe(data => {
             this.lsproducto = data.result;
-            console.log(data);
         });
-        this.api.getsabores().subscribe(data => {
+
+        this.api.getexits().subscribe(data => {
             this.lsing = data.result;
-            console.log(data);
         });
     }
 
     cargar() {
         var selectemp = this.lsing.find(x => x.idreceta == this.opcionSeleccionado);
+        this.existe = selectemp.existe;
         var selectprod = this.lsproducto.find(x => x.idproducto == this.opcionproducto);
-        this.lsingreso.push({ 'nombre': selectemp?.sabor, 'cantidad': this.formulario.get('unidades')?.value, 'idreceta': selectemp?.idreceta, 'producto': this.opcionproducto, 'productonombre':  selectprod.nombre});
+        var usado = 0;
+        this.lsingreso.forEach( (tmp:any) => {
+            if (tmp.idreceta == selectemp.idreceta) {
+                usado += tmp.cantidad;
+            }
+        });
+
+        if ((this.formulario.get('unidades')?.value + usado)  <= this.existe) {
+            this.lsingreso.push({ 'nombre': selectemp?.sabor, 'cantidad': this.formulario.get('unidades')?.value, 'idreceta': selectemp?.idreceta, 'producto': this.opcionproducto, 'productonombre':  selectprod.nombre});
+        }else{
+            Swal.fire({
+                title: "Error",
+                text: "Ya no existen mas unidades o La cantidad ingresada es mayor a la existente",
+                icon: "error",
+            });
+        }
     }
 
     cargarlista() {
         this.api.getventas({ length: this.length, page: this.page, search: this.busqueda }).subscribe(data => {
             this.lista = data.result;
             this.total = data.paginas;
-            console.log(data);
         })
     }
 
