@@ -137,6 +137,7 @@ export class UsuariosComponent implements OnInit {
           })
       } else {
           this.apiusuario.putuser(formu, this.idusuario).subscribe(data => {
+            console.log(data)
               if (data.status == 'OK') {
                   Swal.fire({
                       title: 'Mensaje de Confirmacion',

@@ -17,6 +17,7 @@ export class ResumenComponent implements OnInit{
   cargarlista() {
     this.api.getingredientes().subscribe(data => {
       this.lista = data.result;
+      console.log(this.lista)
     })
   }
 }
