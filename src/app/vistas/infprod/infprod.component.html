@@ -1,0 +1,62 @@
+<app-header></app-header>
+<div class="container">
+    <div class="content-header mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><b>Informe de producción</b></h3>
+                <input type="date" [(ngModel)]="fecha" (ngModelChange)="mostrar();" class="form-control">
+            </div>
+        </div>
+        <div class="card">
+            <div class="p-2">
+                <div>
+                    <h4>Informe de producción</h4>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="w-50">
+                        <p>Fecha: <span>{{fecha}}</span></p>
+                        <p>Usuario: <span>{{usuario}}</span></p>
+                    </div>
+                    <div class="w-50">
+                        <p>Total de sabores producidos: <span>{{totalsabores}}</span></p>
+                        <p>Costo Total: <span>{{costototal}}</span></p>
+                        <p>Cantidad de Bandejas Producidas: <span>{{bandejas}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><b>Detalle de producción</b></h3>
+                <div class="responsive-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nº</th>
+                                <th>Sabor</th>
+                                <th>Fecha</th>
+                                <th>Fecha Vencimiento</th>
+                                <th>Bandejas</th>
+                                <th>Costo</th>
+                                <th>Costo por Bandeja</th>
+                                <th>Porciones existentes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of list; index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{item.sabor}}</td>
+                                <td>{{item.fecha}}</td>
+                                <td>{{item.fechavenc}}</td>
+                                <td>{{item.cantidad}}</td>
+                                <td>{{item.costo}}</td>
+                                <td>{{item.porbandeja}}</td>
+                                <td>{{item.extCantidad}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
