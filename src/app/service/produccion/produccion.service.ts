@@ -35,6 +35,15 @@ export class ProduccionService {
     return this.http.get<ResponseI>(direccion,{headers : header});
   }
 
+  getreport(param: any):Observable<any>{
+    let direccion = this.url + "produccion/informe" ;
+    const header = new HttpHeaders({
+      'content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getToken()
+    })
+    return this.http.get<any>(direccion,{headers : header, params: param});
+  }
+
   getproduccion(lista:{}):Observable<ResponseI>{
     let direccion = this.url + "produccion/listar" ;
     const header = new HttpHeaders({
