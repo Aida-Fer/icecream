@@ -93,7 +93,7 @@
           <form class="formulario" [formGroup]="registerform" (ngSubmit)="mandardatos(registerform.value)">
               <div class="row">
                   <div class="col-3">
-                      <label for="ci" class="form-label">Ci *</label>formulario
+                      <label for="ci" class="form-label">Ci *</label>
                         <input type="text" id="ci" formControlName="ci" placeholder="Ingresar CI" class="form-control"  maxlength="8">
                         <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="registerform.get('ci')?.hasError('required') && registerform.get('ci')?.touched"></i>
                         <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="registerform.get('ci')?.valid"></i>
