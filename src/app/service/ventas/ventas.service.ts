@@ -23,6 +23,15 @@ export class VentasService {
     return this.http.get<ResponseI>(direccion,{headers : header, params:lista});
   }
 
+  getreport(lista:{}):Observable<any>{
+    let direccion = this.url + "api/ventas/reporte" ;
+    const header = new HttpHeaders({
+      'content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getToken()
+    })
+    return this.http.get<any>(direccion,{headers : header, params:lista});
+  }
+
   getsabores():Observable<ResponseI>{
     let direccion = this.url + "api/sabores/allreg" ;
     // let direccion = this.url + "api/produccion/allprod" ;

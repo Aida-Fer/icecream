@@ -26,6 +26,15 @@ export class ProduccionService {
     return this.http.post<ResponseI>(direccion,formulario,{headers : header});
   }
 
+  getsabor(id:string):Observable<ResponseI>{
+    let direccion = this.url + "produccion/"+id ;
+    const header = new HttpHeaders({
+      'content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getToken()
+    })
+    return this.http.get<ResponseI>(direccion,{headers : header});
+  }
+
   getsabores():Observable<ResponseI>{
     let direccion = this.url + "sabores/allreg" ;
     const header = new HttpHeaders({
@@ -52,4 +61,5 @@ export class ProduccionService {
     })
     return this.http.get<ResponseI>(direccion,{headers : header, params:lista});
   }
+  
 }
