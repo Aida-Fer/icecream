@@ -17,9 +17,9 @@ export class UsuarioService {
   }
 
   //Ingresar//
-  loginUsu(form:loginI):Observable<ResponseI>{
+  loginUsu(form:loginI):Observable<any>{
     let direccion = this.url + "auth/login";
-    return this.http.post<ResponseI>(direccion,form);
+    return this.http.post<any>(direccion,form);
 
   }
 

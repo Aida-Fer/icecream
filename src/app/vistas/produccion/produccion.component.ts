@@ -99,18 +99,10 @@ export class ProduccionComponent implements OnInit {
         this.textoboton = 'Modificar';
         this.funcion = 1;
         this.idseleccionado = id;
-        // this.api.getIngreso(id).subscribe(data => {
-        //     console.log(data);
-        //     this.formulario.setValue({
-        //         'idproveedor': data.result.idproveedor,
-        //         'fecha': data.result.fecha,
-        //         'total': data.result.total,
-        //         'ingredientes': '',
-        //         'fechavec': '',
-        //         'unidades': '',
-        //         'costo': ''
-        //     });
-        //     this.lsingreso = data.detalles;
+        // this.api.getsabor(''+id).subscribe(data => {
+        //     this.formulario.controls['idreceta'].setValue(data.result.idreceta)
+        //     this.formulario.controls['fechavenc'].setValue(data.result.fechavenc)
+        //     this.formulario.controls['cantidad'].setValue(data.result.cantidad)
         // })
     }
 

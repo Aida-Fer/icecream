@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { IngredientesI } from 'src/app/Models/Ingredientes.interface';
 import { ProveedorI } from 'src/app/Models/Proveedores.interface';
 import { SaboresI } from 'src/app/Models/sabores.interface';
+import { ClientesService } from 'src/app/service/clientes/clientes.service';
 import { IngresosService } from 'src/app/service/ingresos/ingresos.service';
 import { VentasService } from 'src/app/service/ventas/ventas.service';
 import Swal from 'sweetalert2'
@@ -23,7 +24,8 @@ export class VentasComponent implements OnInit {
     total: number = 0;
     totalvalor: number = 0;
     lista: any = [];
-    length: number = 10;
+    length: number = 2;
+    existe: number = 0;
 
     titulo: string = '';
     textoboton: string = '';
@@ -33,7 +35,16 @@ export class VentasComponent implements OnInit {
     formulario!: FormGroup;
 
     lsing: any[] = [];
-    constructor(private api: VentasService, private router: Router) {
+
+
+    lshistorial: any[] = [];
+    totalmodal: number = 0;
+    pagemodal: number = 0;
+    searchmodal: string = '';
+    idmodal: number = 0;
+    busquedamodal: string = ''
+
+    constructor(private api: VentasService, private router: Router, private apicliente: ClientesService) {
         this.formulario = new FormGroup({
             ci: new FormControl('0', Validators.required),
             nombre: new FormControl('', Validators.required),
@@ -65,27 +76,40 @@ export class VentasComponent implements OnInit {
     precarga() {
         this.api.getproducto().subscribe(data => {
             this.lsproducto = data.result;
-            console.log(data);
         });
-        this.api.getsabores().subscribe(data => {
+
+        this.api.getexits().subscribe(data => {
+            console.log(data)
             this.lsing = data.result;
-            console.log(data);
         });
     }
 
     cargar() {
-        console.log(this.opcionSeleccionado);
         var selectemp = this.lsing.find(x => x.idreceta == this.opcionSeleccionado);
+        this.existe = selectemp.existe;
         var selectprod = this.lsproducto.find(x => x.idproducto == this.opcionproducto);
-        this.lsingreso.push({ 'nombre': selectemp?.sabor, 'cantidad': this.formulario.get('unidades')?.value, 'idreceta': selectemp?.idreceta, 'producto': this.opcionproducto, 'productonombre':  selectprod.nombre});
-        console.log(this.lsingreso);
+        var usado = 0;
+        this.lsingreso.forEach((tmp: any) => {
+            if (tmp.idreceta == selectemp.idreceta) {
+                usado += tmp.cantidad;
+            }
+        });
+
+        if ((this.formulario.get('unidades')?.value + usado) <= this.existe) {
+            this.lsingreso.push({ 'nombre': selectemp?.sabor, 'cantidad': this.formulario.get('unidades')?.value, 'idreceta': selectemp?.idreceta, 'producto': this.opcionproducto, 'productonombre': selectprod.nombre });
+        } else {
+            Swal.fire({
+                title: "Error",
+                text: "Ya no existen mas unidades o La cantidad ingresada es mayor a la existente",
+                icon: "error",
+            });
+        }
     }
 
     cargarlista() {
         this.api.getventas({ length: this.length, page: this.page, search: this.busqueda }).subscribe(data => {
             this.lista = data.result;
             this.total = data.paginas;
-            console.log(data);
         })
     }
 
@@ -98,30 +122,56 @@ export class VentasComponent implements OnInit {
         this.cargarlista();
     }
 
-    asignar(id: number) {        
-        this.router.navigate(['factura/'+id]);
+    asignar(id: number) {
+        this.router.navigate(['factura/' + id]);
     }
 
     mandardatos(formu: any) {
         if (this.idseleccionado == 0) {
-            this.api.postventas(formu,this.lsingreso).subscribe(data => {
+            this.api.postventas(formu, this.lsingreso).subscribe(data => {
                 console.log(data)
                 if (data.status == 'OK') {
                     Swal.fire({
-                        title: data.result,
+                        title: "Correcto",
                         text: data.mensaje,
                         icon: "success",
                         // background: '#CCBBFF'
                     });
                     this.formulario.reset();
                     this.lsingreso = [];
+                    this.mostrar(0)
+                } else {
+                    Swal.fire({
+                        title: 'error',
+                        html: data.mensaje,
+                        icon: "error",
+                    });
                 }
             })
-        } else {
         }
     }
 
     eliminar(id: number) {
         this.lsingreso.splice(id, 1);
+    }
+
+    cambiarpaginamodal(num: number) {
+      this.pagemodal = num;
+      this.cargarcliente();
+    }
+
+    cargarcliente() {
+      this.apicliente.getClie({ length: 5, page: this.pagemodal, search: this.busquedamodal}).subscribe(data => {
+        console.log(data)
+        this.lshistorial = data.result;
+        this.totalmodal = data.paginas;
+        
+      })
+    }
+
+    seleccionar(item:any){
+        this.formulario.controls['ci'].setValue(item.ci);
+        this.formulario.controls['nombre'].setValue(item.nombre);
+        document.getElementById('btnclose')?.click();
     }
 }

@@ -35,7 +35,7 @@
                                         <th>Costo</th>
                                         <th>Cantidad Existente</th>
                                         <th>Unidades Existente</th>
-                                        <th></th>
+                                        <!-- <th></th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,8 +47,8 @@
                                         <td>{{item.costo}}</td>
                                         <td>{{item.extCantidad}}</td>
                                         <td>{{item.extUnidad}}</td>
-                                        <td><button class='btn btn-mod btn-sm' (click)="asignar(item.idproduccion)"><i class='fa fa-edit'></i></button>
-                                        </td>
+                                        <!-- <td><button class='btn btn-mod btn-sm' (click)="asignar(item.idproduccion)"><i class='fa fa-edit'></i></button>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -119,7 +119,7 @@
                 <div class="modal-footer mt-3">
                     <button type="button" class="btn btn-secondary" (click)="mostrar(0)"
                         id="idbotoncerrar">Close</button>
-                    <button [disabled]="formulario.invalid" type="submit"
+                    <button  type="submit"
                         class="btn btn-primary ms-2">{{textoboton}}</button>
                 </div>
             </form>

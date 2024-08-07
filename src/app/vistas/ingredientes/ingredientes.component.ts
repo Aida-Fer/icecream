@@ -30,8 +30,8 @@ export class IngredientesComponent {
   submitted = false;
   ingredientes: IngredientesI[] = [];
 
-  constructor(private formBuilder: FormBuilder, private activerouter: ActivatedRoute, private router: Router, private apiIng: IngredientesService) { 
-     //Formulario
+  constructor(private formBuilder: FormBuilder, private activerouter: ActivatedRoute, private router: Router, private apiIng: IngredientesService) {
+    //Formulario
     this.formulario = new FormGroup({
       nombre: new FormControl('', Validators.required),
       medida: new FormControl('', Validators.required),
@@ -65,55 +65,56 @@ export class IngredientesComponent {
   cambiar(opcion: any) {
     this.funcion = opcion;
     if (this.funcion != 0) {
-        this.formulario.reset();
-        this.lista = [];
-        this.cargarlista();
+      this.formulario.reset();
+      this.lista = [];
+      this.cargarlista();
     }
   }
   //Agregar
   mostrar(numero: number) {
     this.funcion = numero;
     if (this.funcion == 0) {
-        this.formulario.reset();
-        this.lista = [];
-        this.cargarlista();
+      this.formulario.reset();
+      this.lista = [];
+      this.cargarlista();
     } else {
-        this.titulo = 'Registro de Ingredientes';
-        this.textoboton = 'Guardar';
-        this.formulario.reset();
-        //this.precarga();
+      this.titulo = 'Registro de Ingredientes';
+      this.textoboton = 'Guardar';
+      this.formulario.reset();
+      //this.precarga();
     }
   }
+
   mandardatos(formu: any) {
     if (this.idingredientes == 0) {
-        this.apiIng.postIng(formu).subscribe(data => {
-            console.log(data)
-            if (data.status == 'OK') {
-                Swal.fire({
-                    title: 'Mensaje de Confirmacion',
-                    text: 'Ingrediente registrada correctamente',
-                    icon: "success",
-                    // background: '#CCBBFF'
-                });
-                this.formulario.reset();
-                this.cambiar(0);
-                this.cargarlista();
-            }
-        })
+      this.apiIng.postIng(formu).subscribe(data => {
+        console.log(data)
+        if (data.status == 'OK') {
+          Swal.fire({
+            title: 'Mensaje de Confirmacion',
+            text: 'Ingrediente registrada correctamente',
+            icon: "success",
+            // background: '#CCBBFF'
+          });
+          this.formulario.reset();
+          this.cambiar(0);
+          this.cargarlista();
+        }
+      })
     } else {
-        this.apiIng.putIng(formu, this.idingredientes).subscribe(data => {
-            if (data.status == 'OK') {
-                Swal.fire({
-                    title: 'Mensaje de Confirmacion',
-                    text: 'Ingrediente actualizado correctamente',
-                    icon: "success",
-                    // background: '#CCBBFF'
-                });
-                this.formulario.reset();
-                this.cambiar(0);
-                this.cargarlista();
-            }
-        })
+      this.apiIng.putIng(formu, this.idingredientes).subscribe(data => {
+        if (data.status == 'OK') {
+          Swal.fire({
+            title: 'Mensaje de Confirmacion',
+            text: 'Ingrediente actualizado correctamente',
+            icon: "success",
+            // background: '#CCBBFF'
+          });
+          this.formulario.reset();
+          this.cambiar(0);
+          this.cargarlista();
+        }
+      })
     }
   }
 
@@ -122,7 +123,7 @@ export class IngredientesComponent {
     this.titulo = 'Modificar Ingrediente';
     this.textoboton = 'Modificar';
     this.funcion = 1;
-  this.idingredientes = $event;
+    this.idingredientes = $event;
     this.apiIng.getIng($event).subscribe(data => {
       console.log(data);
       this.formulario.setValue({

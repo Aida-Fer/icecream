@@ -103,17 +103,17 @@
               <div class="col-3">
                 <label for="precio" class="form-label">Precio *</label>
                 <input type="number" class="form-control" id="precio" formControlName="precio">
-                <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('precio')?.hasError('required') && registerform.get('costobase')?.touched"></i>
-                <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('precio')?.valid"></i>
+                <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="registerform.get('precio')?.hasError('required') && registerform.get('costobase')?.touched"></i>
+                <i class="formulario__validacion-correcto-tres fa-solid fa-circle-check" *ngIf="registerform.get('precio')?.valid"></i>
                 <span class="text-error"
                   *ngIf="registerform.get('precio')?.hasError('required') && registerform.get('precio')?.touched">
-                  El campo costo base es <strong>requerido</strong>
+                  El campo precio es <strong>requerido</strong>
                 </span>
               </div>
               <div class="col-3">
                 <label for="costobase" class="form-label">Costo Base *</label>
                 <input type="number" class="form-control" id="costobase" formControlName="costobase">
-                <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="registerform.get('costobase')?.hasError('required') && registerform.get('costobase')?.touched"></i>
+                <i class="formulario__validacion-estado-tres fas fa-times-circle" *ngIf="registerform.get('costobase')?.hasError('required') && registerform.get('costobase')?.touched"></i>
                 <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="registerform.get('costobase')?.valid"></i>
                 <span class="text-error"
                   *ngIf="registerform.get('costobase')?.hasError('required') && registerform.get('costobase')?.touched">
@@ -127,15 +127,15 @@
                   <i class="formulario__validacion-correcto-sies fa-solid fa-circle-check" *ngIf="registerform.get('idcategoria')?.valid"></i>
                   <span class="text-error"
                             *ngIf="registerform.get('idcategoria')?.hasError('required') && registerform.get('idcategoria')?.touched">
-                            El campo nombre del proveedor es <strong>requerido</strong>
+                            El campo categoría es <strong>requerido</strong>
                         </span>
                   <option value="{{ item.idcategoria }}" *ngFor="let item of lscat">{{item.nombre}}</option>
                 </select>
               </div>
             </div>
             <div class="modal-footer mt-2">
-              <button type="button" class="btn btn-act" id="idbotoncerrar" (click)="registerform.reset(); opcion=0;">Close</button>
-              <button [disabled]="registerform.invalid" type="submit" class="btn btn-primary ms-2">{{textoboton}}</button>
+              <button type="button" class="btn btn-secondary" id="idbotoncerrar" (click)="mostrar(0);registerform.reset();">Close</button>
+              <button  type="submit" class="btn btn-primary ms-2">{{textoboton}}</button>
             </div>
           </form>
 

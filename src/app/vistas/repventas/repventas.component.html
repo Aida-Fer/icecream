@@ -1,0 +1,54 @@
+<app-header></app-header>
+<div class="container">
+    <div class="content-header mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><b>Informe de Ventas</b></h3>
+                <input type="date" [(ngModel)]="fecha" (ngModelChange)="mostrar();" class="form-control">
+            </div>
+        </div>
+        <div class="card">
+            <div class="p-2">
+                <div>
+                    <h4>Informe de ventas</h4>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="w-50">
+                        <p>Fecha: <span>{{fecha}}</span></p>
+                        <p>Usuario: <span>{{usuario}}</span></p>
+                    </div>
+                    <div class="w-50">
+                        <p>Total de ventas en el día: <span>{{totalventa}}</span></p>
+                        <p>Monto Total: <span>{{montototal}}</span></p>
+                        <p>Cantidad de Sabores: <span>{{sabores}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><b>Detalle de Venta por sabores</b></h3>
+                <div class="responsive-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nº</th>
+                                <th>Sabor</th>
+                                <th>Cantidad</th>
+                                <th>Costo Final</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of list; index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{item.sabor}}</td>
+                                <td>{{item.cantidad}}</td>
+                                <td>{{item.costo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

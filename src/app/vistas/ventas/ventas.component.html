@@ -82,7 +82,7 @@
                 <div class="row">
                     <div class="col-3">
                         <label for="ci" class="form-label">Ci</label>
-                        <input type="text" id="ci" formControlName="ci" class="form-control">
+                        <input data-bs-toggle="modal" data-bs-target="#modalpay" (click)="cargarcliente()" type="text" id="ci" formControlName="ci" class="form-control">
                         <span class="text-danger"
                             *ngIf="formulario.get('fecha')?.hasError('required') && formulario.get('ci')?.touched">
                             El campo ci es <strong>requerido</strong>
@@ -90,14 +90,14 @@
                     </div>
                     <div class="col-4">
                         <label for="nombre" class="form-label">nombre</label>
-                        <input type="text" id="nombre" formControlName="nombre" class="form-control">
+                        <input data-bs-toggle="modal" data-bs-target="#modalpay" (click)="cargarcliente()" type="text" id="nombre" formControlName="nombre" class="form-control">
                         <span class="text-danger"
                             *ngIf="formulario.get('nombre')?.hasError('required') && formulario.get('nombre')?.touched">
                             El campo nombre es <strong>requerido</strong>
                         </span>
-                    </div>
+                    </div> 
                     <div class="col-4">
-                        <label for="fechanac" class="form-label">Fecha de nacimiento</label>
+                        <label for="fechanac" class="form-label">Fecha de venta</label>
                         <input type="date" id="fechanac" formControlName="fechanac" class="form-control">
                         <span class="text-danger"
                             *ngIf="formulario.get('fechanac')?.hasError('required') && formulario.get('fechanac')?.touched">
@@ -105,6 +105,12 @@
                         </span>
                     </div>
                     <hr style="margin-top: 10px;">
+                    <div class="col-5">
+                        <label for="Producto" class="form-label">Producto</label>
+                        <select id="Producto" class="form-select" [(ngModel)]="opcionproducto" formControlName="producto">
+                            <option value="{{item.idproducto}}" *ngFor="let item of lsproducto">{{item.nombre + " | porciones: "+item.nroporcion}}</option>
+                        </select>
+                    </div>
                     <div class="col-5">
                         <label for="Ingredientes" class="form-label">Sabores</label>
                         <select id="Ingredientes" class="form-select" [(ngModel)]="opcionSeleccionado" formControlName="ingredientes">
@@ -114,12 +120,6 @@
                     <div class="col-2">
                         <label for="unidades" class="form-label">Unidades</label>
                         <input type="number" id="unidades" formControlName="unidades"  class="form-control" value="0">
-                    </div>
-                    <div class="col-5">
-                        <label for="Producto" class="form-label">Producto</label>
-                        <select id="Producto" class="form-select" [(ngModel)]="opcionproducto" formControlName="producto">
-                            <option value="{{item.idproducto}}" *ngFor="let item of lsproducto">{{item.nombre + " | porciones: "+item.nroporcion}}</option>
-                        </select>
                     </div>
                     <div class="col-12">
                         <label for="">&nbsp;</label><br>
@@ -159,4 +159,65 @@
             </form>
         </div>
     </div>
+</div>
+
+
+<div class="modal fade" id="modalpay" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Seleccionar Cliente</h1>
+        <button type="button" id="btnclose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="tabla">
+          <div class="tabla table-responsive">
+            <div class="busqueda input-group ms-auto" style="width: 400px;">
+              <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="busquedamodal">
+              <button class="btn btn-busqueda" type="button" (click)="cargarcliente()"><i
+                  class='bx bx-search'></i></button>
+            </div> 
+            <table class="table table-hover mt-2">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Ci</th>
+                  <th scope="col">Fecha de Nacimiento</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-active" *ngFor="let item of lshistorial;">
+                  <td>{{item.idpersona}}</td>
+                  <td>{{item.nombre}}</td>
+                  <td>{{item.ci}}</td>
+                  <td>{{item.fechanac}}</td>
+                  <td><Button class="btn btn-success" (click)="seleccionar(item)">Seleccionar</Button></td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- Paginacion -->
+            <nav aria-label="..." *ngIf="totalmodal!=0">
+              <ul class="pagination">
+                <li [ngClass]="{'page-item':true, 'disabled':pagemodal==0}">
+                  <a class="page-link" (click)="cambiarpaginamodal(pagemodal-1)">&laquo;</a>
+                </li>
+                <li *ngFor="let item of numSequence(totalmodal);let i=index" class="page-item " aria-current="page">
+                  <a [ngClass]="{'page-link':true, 'active':i==pagemodal}" (click)="cambiarpaginamodal(i)">
+                    {{i+1}}
+                  </a>
+                </li>
+                <li [ngClass]="{'page-item':true, 'disabled':pagemodal==totalmodal-1}">
+                  <a class="page-link" (click)="cambiarpaginamodal(pagemodal+1)">&raquo;</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

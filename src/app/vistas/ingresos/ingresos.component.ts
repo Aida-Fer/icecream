@@ -52,7 +52,7 @@ export class IngresosComponent implements OnInit{
             this.lista = [];
             this.cargarlista();
         } else {
-            this.titulo = 'Registro de Ingreso';
+            this.titulo = 'Registro de Inventario';
             this.textoboton = 'registrar';
             this.formulario.reset();
             this.precarga();
@@ -97,12 +97,11 @@ export class IngresosComponent implements OnInit{
 
     asignar(id: number) {
         this.precarga();
-        this.titulo = 'Modificar Sabor';
+        this.titulo = 'Modificar Inventario';
         this.textoboton = 'Modificar';
         this.funcion = 1;
         this.idseleccionado = id;
         this.api.getIngreso(id).subscribe(data => {
-            console.log(data);
             this.formulario.setValue({
                 'idproveedor': data.result.idproveedor,
                 'fecha': data.result.fecha,
@@ -149,6 +148,7 @@ export class IngresosComponent implements OnInit{
     }
 
     eliminar(id:number){
+        this.totalvalor = this.totalvalor - this.lsingreso[id].cantidad * this.lsingreso[id].CostoU;
         this.lsingreso.splice(id,1);
     }
 }

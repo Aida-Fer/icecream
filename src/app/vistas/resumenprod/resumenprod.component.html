@@ -1,0 +1,32 @@
+<app-header></app-header>
+<div class="container mt-5 card">
+    <div class="text-center">
+        <h3>Resumen de Inventario</h3>
+    </div>
+    <div class="table-responsive"> 
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Sabor</th>
+                    <th>Fecha de produccion</th>
+                    <th>Fecha de vencimiento</th>
+                    <th>Bandejas producidas</th>
+                    <th>Costo de bandeja</th>
+                    <th>Bolas Existentes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of lista; index as i">
+                    <td [ngClass]="{'red': item.extCantidad == 0 || item.extCantidad == null, 'yellow': item.extCantidad <=10 && item.extCantidad > 0, 'morado': item.fechavenc < date1}">{{i}}</td>
+                    <td [ngClass]="{'red': item.extCantidad == 0 || item.extCantidad == null, 'yellow': item.extCantidad <=10 && item.extCantidad > 0, 'morado': item.fechavenc < date1}">{{item.sabor}}</td>
+                    <td [ngClass]="{'red': item.extCantidad == 0 || item.extCantidad == null, 'yellow': item.extCantidad <=10 && item.extCantidad > 0, 'morado': item.fechavenc < date1}">{{item.fecha}}</td>
+                    <td [ngClass]="{'red': item.extCantidad == 0 || item.extCantidad == null, 'yellow': item.extCantidad <=10 && item.extCantidad > 0, 'morado': item.fechavenc < date1}">{{item.fechavenc}}</td>
+                    <td [ngClass]="{'red': item.extCantidad == 0 || item.extCantidad == null, 'yellow': item.extCantidad <=10 && item.extCantidad > 0, 'morado': item.fechavenc < date1}">{{item.cantidad}}</td>
+                    <td [ngClass]="{'red': item.extCantidad == 0 || item.extCantidad == null, 'yellow': item.extCantidad <=10 && item.extCantidad > 0, 'morado': item.fechavenc < date1}">{{item.costo}}</td>
+                    <td [ngClass]="{'red': item.extCantidad == 0 || item.extCantidad == null, 'yellow': item.extCantidad <=10 && item.extCantidad > 0, 'morado': item.fechavenc < date1 }">{{item.extCantidad}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

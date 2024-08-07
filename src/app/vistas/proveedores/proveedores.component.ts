@@ -102,6 +102,12 @@ export class ProveedoresComponent {
                 this.formulario.reset();
                 this.cambiar(0);
                 this.cargarlista();
+            }else{
+              Swal.fire({
+                  title: 'error',
+                  html: data.mensaje,
+                  icon: "error",
+              });
             }
         })
     } else {
@@ -116,6 +122,12 @@ export class ProveedoresComponent {
                 this.formulario.reset();
                 this.cambiar(0);
                 this.cargarlista();
+            }else{
+              Swal.fire({
+                  title: 'error',
+                  html: data.mensaje,
+                  icon: "error",
+              });
             }
         })
     }
