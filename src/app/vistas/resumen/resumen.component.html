@@ -18,9 +18,9 @@
                 <tr *ngFor="let item of lista; index as i">
                     <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{i}}</td>
                     <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{item.nombre}}</td>
-                    <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{item.unidad}}</td>
                     <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{item.unidades}}</td>
                     <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{item.cantidad}}</td>
+                    <td [ngClass]="{'red': item.cantidad == 0 || item.cantidad == null, 'yellow': item.cantidad <=10 && item.cantidad > 0}">{{item.unidad}}</td>
                 </tr>
             </tbody>
         </table>

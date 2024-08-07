@@ -18,6 +18,7 @@ import { FacturaComponent } from './vistas/factura/factura.component';
 import { WebComponent } from './vistas/web/web.component';
 import { InfprodComponent } from './vistas/infprod/infprod.component';
 import { RepventasComponent } from './vistas/repventas/repventas.component';
+import { ResumenprodComponent } from './vistas/resumenprod/resumenprod.component';
 // import { AsaboresComponent } from './vistas/sabores/asabores/asabores.component';
 
 const routes: Routes = [
@@ -40,6 +41,7 @@ const routes: Routes = [
   {path: "web" , component: WebComponent},
   {path: "infprod" , component: InfprodComponent},
   {path: "repventas" , component: RepventasComponent},
+  {path: "resumenprod" , component: ResumenprodComponent},
   // { path: 'addSab', component: AsaboresComponent },
   {path: "**" , redirectTo:"/pag", pathMatch: "full"}
 ];

@@ -123,8 +123,11 @@
               </div>
               <div class="col-6">
                 <label for="unidad" class="form-label">Unidad *</label>
-                <input type="text" id="unidad" formControlName="unidad" placeholder="Ingresar la medida del ingrediente"
-                  class="form-control">
+                <select id="unidad" formControlName="unidad" class="form-control">
+                  <option style="color: black;" value="kilogramos">kilogramos</option>
+                  <option style="color: black;" value="gramos">gramos</option>
+                  <option style="color: black;" value="litros">litros</option>
+                </select>
                   <i class="formulario__validacion-estado-seis fas fa-times-circle" *ngIf="formulario.get('unidad')?.hasError('required') && formulario.get('unidad')?.touched"></i>
                   <i class="formulario__validacion-correcto-seis fa-solid fa-circle-check" *ngIf="formulario.get('unidad')?.valid"></i>
                 <span class="text-error"
