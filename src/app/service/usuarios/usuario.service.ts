@@ -74,4 +74,13 @@ export class UsuarioService {
   getToken() {
     return "" + localStorage.getItem('token');
   }
+
+  logout():Observable<any>{
+      const header = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer `+ this.getToken()
+      })
+      let direccion = this.url+"usuarios/logout";
+      return this.http.get<any>(direccion, {headers : header});
+  }
 }

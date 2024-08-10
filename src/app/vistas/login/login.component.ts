@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit{
       let dataResponse: ResponseI = data;
       if(dataResponse.status == "OK"){
         localStorage.setItem('token', dataResponse.result);
-        //localStorage.setItem('rol');
+        localStorage.setItem('rol', dataResponse.rol);
         localStorage.setItem('nombre',data.nombre);
         this.router.navigate(['dashboard']);
       }
