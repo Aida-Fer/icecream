@@ -128,6 +128,13 @@ export class IngresosComponent implements OnInit{
                     });
                     this.formulario.reset();
                     this.lsingreso = [];
+                }else {
+                    Swal.fire({
+                        title: "error",
+                        text: data.mensaje,
+                        icon: "error",
+                        background: '#CCBBFF'
+                    });
                 }
             })
         } else {
@@ -142,6 +149,13 @@ export class IngresosComponent implements OnInit{
                     this.mostrar(0);
                     this.formulario.reset();
                     this.idseleccionado = 0;
+                }else {
+                    Swal.fire({
+                        title: "error",
+                        text: data.mensaje,
+                        icon: "error",
+                        background: '#CCBBFF'
+                    });
                 }
             })
         }
