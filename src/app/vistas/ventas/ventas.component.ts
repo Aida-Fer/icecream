@@ -83,21 +83,23 @@ export class VentasComponent implements OnInit {
         });
 
         this.api.getexits().subscribe(data => {
-            console.log(data)
             this.lsing = data.result;
         });
     }
 
     cargar() {
         var selectemp = this.lsing.find(x => x.idreceta == this.opcionSeleccionado);
+        console.log(this.opcionSeleccionado)
         this.existe = selectemp.existe;
         var usado = 0;
         this.lsingreso.forEach((tmp: any) => {
-            if (tmp.idreceta == selectemp.idreceta) {
-                usado += tmp.cantidad;
-            }
+                tmp.sabores.forEach((item:any) => {
+                if (item.idreceta == selectemp.idreceta) {
+                    usado += tmp.cantidad;
+                }
+            })
         });
-        if ((this.formulario.get('unidades')?.value + usado) <= this.existe && this.unidadestemp > 0) {
+        if ((this.unidadestemp + usado) <= this.existe && this.unidadestemp > 0) {
             this.listatemp.push({ 'nombre': selectemp?.sabor, 'cantidad': this.unidadestemp, 'idreceta': selectemp?.idreceta });
             // this.listatemp.push({ 'nombre': selectemp?.sabor, 'cantidad': this.unidadestemp, 'idreceta': selectemp?.idreceta, 'producto': this.opcionproducto, 'productonombre': selectprod.nombre });
         } else {
@@ -111,10 +113,15 @@ export class VentasComponent implements OnInit {
 
     aceptar() {
         var selectprod = this.lsproducto.find(x => x.idproducto == this.opcionproducto);
+        console.log(selectprod)
         var total = 0;
         this.listatemp.forEach(x => total += x.cantidad)
         if (selectprod.nroporcion != total) {
-            alert('El número de porciones no es el correcto')
+            Swal.fire({
+                title: 'error',
+                html: 'El número de porciones no es correcto',
+                icon: "error",
+            });
         } else {
             this.lsingreso.push({ 'nombre': selectprod.nombre, 'producto': this.opcionproducto, 'cantidad': total, 'precio': selectprod.precio, 'sabores': this.listatemp })
             this.listatemp = [];
