@@ -1,0 +1,14 @@
+.red{
+    background: rgb(205, 45, 45);
+    color: white;
+}
+
+.yellow{
+    background: orange;
+    color: black;
+}
+
+.morado{
+    background: purple;
+    color: white;
+}

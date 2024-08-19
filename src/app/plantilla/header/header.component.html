@@ -8,7 +8,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" *ngIf="rol=='1'">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Producción
@@ -16,10 +16,8 @@
                     <ul class="dropdown-menu bg-primary dropdown-menu-end">
                         <li><a class="dropdown-item" routerLink="/recetas" routerLinkActive="activo">Gestión Recetas</a>
                         </li>
-                        <!-- <li><a class="dropdown-item" routerLink="/sab" routerLinkActive="activo">Gestión Sabores</a></li> -->
-                        <!-- <li><a class="dropdown-item" href="ingresos">Ingresos</a></li> -->
+                        <li><a class="dropdown-item" routerLink="/resumenprod" routerLinkActive="activo">Resumen de producción</a></li>
                         <li><a class="dropdown-item" href="produccion">Gestión Producción</a></li>
-                        <!-- <li><a class="dropdown-item" href="#">Control de lotes de producción</a></li> -->
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -29,12 +27,12 @@
                     </a>
                     <ul class="dropdown-menu bg-primary dropdown-menu-end">
                         <!-- <li><a class="dropdown-item" routerLink="/resumen" routerLinkActive="activo">Resumen</a></li> -->
-                        <li><a class="dropdown-item" routerLink="/ing" routerLinkActive="activo">Gestión de
+                        <li *ngIf="rol=='1'"><a class="dropdown-item" routerLink="/ing" routerLinkActive="activo">Gestión de
                                 ingredientes</a></li>
                         <li><a class="dropdown-item" routerLink="/resumen" routerLinkActive="activo">Control de existencias de ingredientes</a></li>
                         <li><a class="dropdown-item" routerLink="/prov" routerLinkActive="activo">Gestión de
                                 proveedores</a></li>
-                        <li><a class="dropdown-item" href="ingresos">Registro de entradas y salidas de inventario</a></li>
+                        <li *ngIf="rol=='1'"><a class="dropdown-item" href="ingresos">Registro de entradas y salidas de inventario</a></li>
                         <!-- <li><a class="dropdown-item" href="#">Alertas de inventario bajo</a></li> -->
                     </ul>
                 </li>
@@ -70,7 +68,7 @@
                         <li><a class="dropdown-item" href="#">Análisis de tendencias y estadísticas</a></li> -->
                     </ul>
                 </li>
-                <li class="nav-item  dropdown">
+                <li class="nav-item  dropdown" *ngIf="rol=='1'">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Configuración
@@ -85,7 +83,7 @@
                     </ul>
                 </li>
                 <li class="nav-item  dropdown">
-                    <a class="nav-link" routerLink="/web" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link" routerLink="/web" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="salir()">
                         <img src="../../../assets/imagenes_/power-off.png" >
                     </a>
                 </li>

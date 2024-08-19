@@ -15,7 +15,9 @@ import Swal from 'sweetalert2'
     styleUrls: ['./ventas.component.css']
 })
 export class VentasComponent implements OnInit {
+    display: string = '';
     funcion: number = 0;
+    unidadestemp: number = 0;
     busqueda: string = '';
     idseleccionado: number = 0;
     opcionSeleccionado: number = 0;
@@ -24,13 +26,14 @@ export class VentasComponent implements OnInit {
     total: number = 0;
     totalvalor: number = 0;
     lista: any = [];
+    listatemp: any[] = [];
     length: number = 2;
     existe: number = 0;
 
     titulo: string = '';
     textoboton: string = '';
     lsprovee: ProveedorI[] = [];
-    lsingreso: any = [];
+    lsingreso: any[] = [];
     lsproducto: any[] = [];
     formulario!: FormGroup;
 
@@ -38,6 +41,7 @@ export class VentasComponent implements OnInit {
 
 
     lshistorial: any[] = [];
+    lsseleccionados: any[] = [];
     totalmodal: number = 0;
     pagemodal: number = 0;
     searchmodal: string = '';
@@ -87,23 +91,36 @@ export class VentasComponent implements OnInit {
     cargar() {
         var selectemp = this.lsing.find(x => x.idreceta == this.opcionSeleccionado);
         this.existe = selectemp.existe;
-        var selectprod = this.lsproducto.find(x => x.idproducto == this.opcionproducto);
         var usado = 0;
         this.lsingreso.forEach((tmp: any) => {
             if (tmp.idreceta == selectemp.idreceta) {
                 usado += tmp.cantidad;
             }
         });
-
-        if ((this.formulario.get('unidades')?.value + usado) <= this.existe) {
-            this.lsingreso.push({ 'nombre': selectemp?.sabor, 'cantidad': this.formulario.get('unidades')?.value, 'idreceta': selectemp?.idreceta, 'producto': this.opcionproducto, 'productonombre': selectprod.nombre });
+        if ((this.formulario.get('unidades')?.value + usado) <= this.existe && this.unidadestemp > 0) {
+            this.listatemp.push({ 'nombre': selectemp?.sabor, 'cantidad': this.unidadestemp, 'idreceta': selectemp?.idreceta });
+            // this.listatemp.push({ 'nombre': selectemp?.sabor, 'cantidad': this.unidadestemp, 'idreceta': selectemp?.idreceta, 'producto': this.opcionproducto, 'productonombre': selectprod.nombre });
         } else {
             Swal.fire({
                 title: "Error",
-                text: "Ya no existen mas unidades o La cantidad ingresada es mayor a la existente",
+                text: "Ya no existen mas unidades o La cantidad ingresada es menor a cero",
                 icon: "error",
             });
         }
+    }
+
+    aceptar() {
+        var selectprod = this.lsproducto.find(x => x.idproducto == this.opcionproducto);
+        var total = 0;
+        this.listatemp.forEach(x => total += x.cantidad)
+        if (selectprod.nroporcion != total) {
+            alert('El número de porciones no es el correcto')
+        } else {
+            this.lsingreso.push({ 'nombre': selectprod.nombre, 'producto': this.opcionproducto, 'cantidad': total, 'precio': selectprod.precio, 'sabores': this.listatemp })
+            this.listatemp = [];
+            document.getElementById('btnclose2')?.click();
+        }
+
     }
 
     cargarlista() {
@@ -155,23 +172,30 @@ export class VentasComponent implements OnInit {
         this.lsingreso.splice(id, 1);
     }
 
+    eliminarmodal(id: number) {
+        this.listatemp.splice(id, 1);
+    }
+
     cambiarpaginamodal(num: number) {
-      this.pagemodal = num;
-      this.cargarcliente();
+        this.pagemodal = num;
+        this.cargarcliente();
     }
 
     cargarcliente() {
-      this.apicliente.getClie({ length: 5, page: this.pagemodal, search: this.busquedamodal}).subscribe(data => {
-        console.log(data)
-        this.lshistorial = data.result;
-        this.totalmodal = data.paginas;
-        
-      })
+        this.apicliente.getClie({ length: 5, page: this.pagemodal, search: this.busquedamodal }).subscribe(data => {
+            this.lshistorial = data.result;
+            this.totalmodal = data.paginas;
+
+        })
     }
 
-    seleccionar(item:any){
+    seleccionar(item: any) {
         this.formulario.controls['ci'].setValue(item.ci);
         this.formulario.controls['nombre'].setValue(item.nombre);
         document.getElementById('btnclose')?.click();
+    }
+
+    modal() {
+        const element = document.getElementById('mostrar')?.click();
     }
 }

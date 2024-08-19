@@ -6,4 +6,5 @@ export interface ResponseI
   mensaje?:any;
   detalles?:any;
   errors?: any;
+  rol?: any;
 }

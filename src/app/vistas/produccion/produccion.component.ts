@@ -118,7 +118,14 @@ export class ProduccionComponent implements OnInit {
                         icon: "success",
                         background: '#CCBBFF'
                     });
-                    // this.formulario.reset();
+                    this.formulario.reset();
+                }else {
+                    Swal.fire({
+                        title: "error",
+                        text: data.mensaje,
+                        icon: "error",
+                        background: '#CCBBFF'
+                    });
                 }
             })
         } else {
