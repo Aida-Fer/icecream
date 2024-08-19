@@ -141,7 +141,7 @@ export class ProductoComponent implements OnInit {
                 this.cargarlista();
             }else{
               Swal.fire({
-                  title: 'Error',
+                  title: 'Error '+data.result,
                   html: data.mensaje,
                   icon: 'error',
                   confirmButtonText: 'OK'

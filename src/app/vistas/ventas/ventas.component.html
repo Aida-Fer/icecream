@@ -112,6 +112,10 @@
                             <option value="{{item.idproducto}}" *ngFor="let item of lsproducto">{{item.nombre + " | porciones: "+item.nroporcion}}</option>
                         </select>
                     </div>
+                    <div class="col-5">
+                        <label class="form-label">Total: </label><br>
+                        <label class="form-label">{{totalcompra}}</label>
+                    </div>
                     <div class="col-5 d-none">
                         <label for="Ingredientes" class="form-label">Sabores</label>
                         <select id="Ingredientes" class="form-select" formControlName="ingredientes">

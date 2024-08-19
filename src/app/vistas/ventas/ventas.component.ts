@@ -29,6 +29,7 @@ export class VentasComponent implements OnInit {
     listatemp: any[] = [];
     length: number = 2;
     existe: number = 0;
+    totalcompra: number = 0;
 
     titulo: string = '';
     textoboton: string = '';
@@ -126,8 +127,14 @@ export class VentasComponent implements OnInit {
             this.lsingreso.push({ 'nombre': selectprod.nombre, 'producto': this.opcionproducto, 'cantidad': total, 'precio': selectprod.precio, 'sabores': this.listatemp })
             this.listatemp = [];
             document.getElementById('btnclose2')?.click();
+            this.calctotalcompra();
         }
+    }
 
+    calctotalcompra(){
+        var total = 0;
+        this.lsingreso.forEach(x => total += x.precio)
+        this.totalcompra = total;
     }
 
     cargarlista() {
@@ -177,6 +184,7 @@ export class VentasComponent implements OnInit {
 
     eliminar(id: number) {
         this.lsingreso.splice(id, 1);
+        this.calctotalcompra();
     }
 
     eliminarmodal(id: number) {
