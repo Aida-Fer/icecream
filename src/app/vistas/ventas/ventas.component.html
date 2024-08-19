@@ -107,33 +107,29 @@
                     <hr style="margin-top: 10px;">
                     <div class="col-5">
                         <label for="Producto" class="form-label">Producto</label>
-                        <select id="Producto" class="form-select" [(ngModel)]="opcionproducto" formControlName="producto">
+                        <input type="hidden" id="mostrar" data-bs-toggle="modal" data-bs-target="#modalselprod">
+                        <select (change)="modal()" id="Producto" class="form-select" [(ngModel)]="opcionproducto" formControlName="producto">
                             <option value="{{item.idproducto}}" *ngFor="let item of lsproducto">{{item.nombre + " | porciones: "+item.nroporcion}}</option>
                         </select>
                     </div>
-                    <div class="col-5">
+                    <div class="col-5 d-none">
                         <label for="Ingredientes" class="form-label">Sabores</label>
-                        <select id="Ingredientes" class="form-select" [(ngModel)]="opcionSeleccionado" formControlName="ingredientes">
+                        <select id="Ingredientes" class="form-select" formControlName="ingredientes">
                             <option value="{{item.idreceta}}" *ngFor="let item of lsing">{{item.sabor}}</option>
                         </select>
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 d-none">
                         <label for="unidades" class="form-label">Unidades</label>
                         <input type="number" id="unidades" formControlName="unidades"  class="form-control" value="0">
-                    </div>
-                    <div class="col-12">
-                        <label for="">&nbsp;</label><br>
-                        <button type="button" class="btn btn-secondary" style="width:100%" (click)="cargar();"><i
-                                class="fa fa-plus"></i> Agregar</button>
                     </div>
                     <div class="col-12 table-responsive"><br>
                         <table class="table table-hover" style="width:100%">
                             <thead>
                                 <tr class="table-secondary">
                                     <th scope="col">#</th>
-                                    <th scope="col">Ingrediente</th>
-                                    <th scope="col">Unidades</th>
                                     <th scope="col">Producto</th>
+                                    <th scope="col">Porciones Seleccionadas</th>
+                                    <!-- <th scope="col">Precio</th> -->
                                     <th></th>
                                 </tr>
                             </thead>
@@ -142,7 +138,7 @@
                                     <td scope="row">{{i+1}}</td>
                                     <td>{{item.nombre}}</td>
                                     <td>{{item.cantidad}}</td>
-                                    <td>{{item.productonombre}}</td>
+                                    <!-- <td>{{item.productonombre}}</td> -->
                                     <td><button type="button" class="btn btn-primary" (click)="eliminar(i)"><i
                                                 class='bx bx-trash'></i></button></td>
                                 </tr>
@@ -214,6 +210,63 @@
                 </li>
               </ul>
             </nav>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalselprod" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Seleccionar Sabores</h1>
+        <button type="button" id="btnclose2" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-5">
+                <label for="Ingredientes" class="form-label">Sabores</label>
+                <select id="Ingredientes" class="form-select" [(ngModel)]="opcionSeleccionado">
+                    <option value="{{item.idreceta}}" *ngFor="let item of lsing">{{item.sabor}}</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <label for="unidades" class="form-label">Unidades</label>
+                <input type="number" id="unidades" [(ngModel)]="unidadestemp" class="form-control" value="0">
+            </div>
+            <div class="col-5">
+                <label for="">&nbsp;</label><br>
+                <button type="button" class="btn btn-secondary" style="width:100%" (click)="cargar();"><i
+                        class="fa fa-plus"></i> Agregar</button>
+                <button type="button" class="btn btn-primary" style="width:100%" (click)="aceptar();"><i
+                                class="fa fa-plus"></i> Aceptar</button>
+            </div>
+        </div>
+        <div class="tabla">
+          <div class="tabla table-responsive">
+            <table class="table table-hover mt-2">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Nº</th>
+                  <th scope="col">Sabor</th>
+                  <th scope="col">Unidades</th>
+                  <th scope="col"></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-active" *ngFor="let item of listatemp; index as i">
+                  <td>{{i+1}}</td>
+                  <td>{{item.nombre}}</td>
+                  <td>{{item.cantidad}}</td>
+                  <td><Button class="btn btn-warning" (click)="eliminarmodal(i)">Eliminar</Button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
         </div>
